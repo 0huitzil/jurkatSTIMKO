@@ -16,3 +16,6 @@ s.*
 
 #Latex folder 
 LaTeX/
+
+#Python cache
+PyScripts/__pycache__
