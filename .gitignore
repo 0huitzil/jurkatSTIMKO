@@ -1,0 +1,18 @@
+# dotenv
+.env
+
+# virtualenv
+.venv
+venv/
+ENV/
+
+# files created from AUTO 
+*.exe
+*.o
+fort.*
+b.*
+d.*
+s.*
+
+#Latex folder 
+LaTex/
