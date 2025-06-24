@@ -23,6 +23,10 @@ One still needs to install AUTO to be able to run the continuation scripts, howe
 
 Different versions of the model (WT, S1-KO, S2-KO) are containted in individual `.f90` files. Scripts with the  suffix `CDI` on the name also include the CDI regulatory mechanism. Scripts with the `DynamicCell` suffix on the name include both the CDI regulatory mechanism, the differential equation describing the changes in $K_1$ (STIM1's binding affinity to Ca$^{2+}$), and the STIM-independent influx pathway ($\alpha_0$)
 
+## The SymPy scripts 
+
+The code used to create the expressions for the activated forms $S_1^*$, $S_2^*$, $S_{21}^*$ and $S_{12}^*$ is found in the `PySym_STIMKOModel` and `PySym_STIMWTModel` scripts.  
+
 ## Installing AUTO
 
 First, clone the AUTO repository. Open a terminal in the folder you wish to put the AUTO files in and type:
