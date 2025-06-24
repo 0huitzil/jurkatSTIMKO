@@ -127,28 +127,31 @@ print(S21star)
 print('S12=')
 print(S12star)
 # %% Desmos printing 
-Desmos_S1AStar = S1Astar.subs(ce, 'x').subs(phi1, 'phi_1(x)').subs(phi2, 'phi_2(x)').subs(phi3, 'phi_3(x)').subs(phi4, 'phi_4(x)')
-Desmos_S2AStar = S2Astar.subs(ce, 'x').subs(phi1, 'phi_1(x)').subs(phi2, 'phi_2(x)').subs(phi3, 'phi_3(x)').subs(phi4, 'phi_4(x)')
-Desmos_S12AStar = S12star.subs(ce, 'x').subs(phi1, 'phi_1(x)').subs(phi2, 'phi_2(x)').subs(phi3, 'phi_3(x)').subs(phi4, 'phi_4(x)').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)')
-Desmos_S21AStar = S21star.subs(ce, 'x').subs(phi1, 'phi_1(x)').subs(phi2, 'phi_2(x)').subs(phi3, 'phi_3(x)').subs(phi4, 'phi_4(x)').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)')
-print_latex(Desmos_S1AStar)
-print_latex(Desmos_S2AStar)
-print_latex(Desmos_S12AStar)
-print_latex(Desmos_S21AStar)
+"""
+Unused, but left here just in case. This code changes the variable names to 'x' and 'y' in order to plot them in Desmos. 
+"""
+# Desmos_S1AStar = S1Astar.subs(ce, 'x').subs(phi1, 'phi_1(x)').subs(phi2, 'phi_2(x)').subs(phi3, 'phi_3(x)').subs(phi4, 'phi_4(x)')
+# Desmos_S2AStar = S2Astar.subs(ce, 'x').subs(phi1, 'phi_1(x)').subs(phi2, 'phi_2(x)').subs(phi3, 'phi_3(x)').subs(phi4, 'phi_4(x)')
+# Desmos_S12AStar = S12star.subs(ce, 'x').subs(phi1, 'phi_1(x)').subs(phi2, 'phi_2(x)').subs(phi3, 'phi_3(x)').subs(phi4, 'phi_4(x)').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)')
+# Desmos_S21AStar = S21star.subs(ce, 'x').subs(phi1, 'phi_1(x)').subs(phi2, 'phi_2(x)').subs(phi3, 'phi_3(x)').subs(phi4, 'phi_4(x)').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)')
+# print_latex(Desmos_S1AStar)
+# print_latex(Desmos_S2AStar)
+# print_latex(Desmos_S12AStar)
+# print_latex(Desmos_S21AStar)
 
-print_latex(s1.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
-print_latex(s2.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
-
-
-print_latex(s21.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
-print_latex(s12.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
-
-print_latex(ph1.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
-print_latex(ph2.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
+# print_latex(s1.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
+# print_latex(s2.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
 
 
-print_latex(ph3.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
-print_latex(ph4.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
+# print_latex(s21.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
+# print_latex(s12.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
+
+# print_latex(ph1.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
+# print_latex(ph2.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
+
+
+# print_latex(ph3.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
+# print_latex(ph4.subs(ce, 'x').subs(S1a, 'S_1a(x)').subs(S2a, 'S_2a(x)'))
 
 
 
