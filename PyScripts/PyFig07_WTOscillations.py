@@ -19,7 +19,8 @@ Bifurcation diagram
 Only run this is section if the .WT files have not been created yet
 """
 # file = "AUTOJurkatWTCell"
-# model = load(file) 
+# cts = 'AUTOJurkatCell'
+# model = load(file, constants = cts) 
 # Vplc = [0.1, 0.2, 0.3]
 # eqWT = run(
 #     model, 

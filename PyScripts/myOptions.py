@@ -21,7 +21,7 @@ def saveFigure(filename: str, fig: Figure):
     """
     Saves the figure into the Figures folder
     If the latexPath is enabled, also saves it there
-
+    LatexPath being the local path I use to store my figures for latex
     Parameters
     ----------
     filename: the name of the figure
