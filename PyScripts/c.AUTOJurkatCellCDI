@@ -1,0 +1,179 @@
+
+## Problem constants ====================
+NDIM=   7,      #Dimension of the system
+NBC= 0,         #Number of boundary conditions
+NINT= 0,        #Number of integral conditions
+NPAR = 100,      #Number of parameters 
+JAC= 0,         #User supplies derivatives 
+                #=0, no derivatives gives by the user 
+                #=1, Derivate supplied in FUNC, BCND, ICND, FOPT
+                #=-1, Derivatives omitted in FUNC 
+## Discretization constants =============
+NTST=  800,     #Number of intervals, as small as possible (Default: 50)
+NCOL=   4,      #Number of Gauss collocation points, (Default: 4)
+IAD =   3,      #0 for fixed mesh, >0 (3) for adaptive mesh
+## Tolerances ===========================
+EPSL= 1e-8,     #Convergence criterion (Default: 1e-6)
+EPSU = 1e-8,    #Convergence criterion (Default: 1e-6)
+EPSS =1e-6,     #Special solution criteron (Default: 1e-4)
+ITMX= 8,        #Iterations to locate special points (Default: 8)
+NWTN= 3,        #Number of full Newton iterations (Default: 3)
+ITNW= 7,        #Maximum number of Newton-Chord iterations (Default: 5)
+# Step size =============================
+DS  =   1e-2,   #First step size (sign defines direction of computation)
+DSMIN=  1e-6,   #Minimum step size
+DSMAX=   1e-1,  #Maximum step size
+IADS=   1,      #Adapt step-size after every IADS steps. (Default: 1)
+THL =  {},      #Individual par weights for step size (num: weight)
+THU =  {},      #Individual variable weights for step size (num: weight)
+## Diagram Limits ======================
+STOP=[]         #Stopping conditions (special points e.g. HB1, UZ3)
+NMX=   5000,    #Maximum number of steps 
+NPR=  0,        #Print output every NPR steps. 
+## Free parameters =====================
+#Parameters to be varied
+ICP =  [
+    'Vplc',
+     ]          
+## Computation constants ===============
+ILP =   1,      #Detection of folds
+                #=0, No detection of folds, recommended 
+                #=1, Turn on detection of folds. Only use if necessary. 
+
+SP = [],        #Turn off of special points in format LP0, UZ3, etc.
+                #(PT#, stops at the #th instance of the PT bifurcation)
+                #(PT0, turn off detection of the PT bifurcation)
+
+ISP =   1,      #Detection of Hopf bifurcations 
+                #=0, turn off detection of HB, BP, PD, TR and Floquet Multis (FM)
+                #=1, detect HB and BP, calculate Floquet Multis 
+                #=2, detect all special solutions (with periodics)
+                #=3, detect BP and calculate Floquet Multis
+                #=4, detect BP and HB for alg eqs, as well as FM, PD and TR
+
+ISW = 1,        #Behaviour for branch switching 
+                #=1 Regular Behaviour (???)
+                #=-1 Branch switching at start point (ISP) for BP and PD
+                #=2 Branch switching at start point (ISP) for LP, HB, PD, TR, symmetric BP
+                #=2 Branch switching at start point (ISP) for non-symmetric BP
+
+PAR = {},       #Change parameters at start point (format number: value)
+
+IRS =   0,      #Behaviour of starting point 
+                #=0, start at the STPNT of the .f90 file
+                #>0, start at the IRS value of the previous sol
+                #<0, start at the IRSth value of the previous sol
+                #'XYn' start at the nth point (e.g, HB2) of the previous sol
+
+IPS =   1,      #Define the problem type
+                #=0, alg bifurcation problem 
+                #=1, Stationary solutions of ODEs, no HB and no stability
+                #=-1, Fixed points of discrete DS, with stability
+                #=-2, Time integration with Forward Euler. (why)
+                #=2, Compute periodic solutions, ISP is HB, or a periodic orbit
+                #=4, Boundary value problem
+                #=5, Algebraic optimization problem
+                #=7, Boundary value problem with Floquet Multis 
+                #=9, Detection of Homoclinics with HomCont 
+                #=11, Statially uniform solutions of a parabolic PDE 
+                #=12, Travelling wave solutions of a parabolic PDE
+                #=14, Time evolution of a parabolic PDE with boundary conditions
+                #=15, Optimization of periodic solutions
+                #=16, Similar to =14 with user supplied boundary conditions
+                #=17, Continue stationary solutions of parabolic systems (=16)
+
+MXBF=  10,      #Algebraic problems only, maximum numner of bifurcations to be treated
+
+## Output Control =====================
+# Names of the variables, in format num: name
+unames = {
+    1: 'c',
+    2: 'ce',
+    3: 'cm',
+    4: 'h',
+    5: 'p',
+    6: 's',
+    7: 'i', 
+    }
+# Named parameters, informat num: name
+parnames = { 
+    1: 'Vpm',
+    2: 'Kpm',
+    3: 's1',
+    4: 'Vsoce',
+    5: 'Ts',
+    6: 'Ke',
+    7: 'a0',
+    8: 'n',
+    9: 'K1',
+    10: 'K2',
+    11: 'PERIOD',
+    12: 'K12',
+    13: 'K21',
+    14: 'TIME',
+    15: 'w1',
+    16: 'w2',
+    17: 'w12',
+    18: 'w21',
+    19: 'Vdeg',
+    20: 'Kdeg',
+    21: 'Vplc',
+    22: 'Tp',
+    23: 'gammaE',
+    24: 'gammaM',
+    25: 'delta',
+    26: 'Ct',
+    27: 'Kf',
+    28: 'kbeta',
+    29: 'Kp',
+    30: 'Kc',
+    31: 'Kh',
+    32: 'Tmax',
+    33: 'Kt',
+    34: 'VsC',
+    35: 'VsM',
+    36: 'KbarC',
+    37: 'KbarM',
+    38: 'KsM',
+    39: 'KsC',
+    40: 'Tg',
+    41: 'kdiff',
+    42: 'Ki',
+    43: 'si',
+    44: 'Ti',
+    45: 'Vk',
+    46: 'k1Rest',
+    47: 'kn',
+    48: 'nk',
+    49: 'Tkmax',
+    50: 'taun',
+    '99': 'Frequency',
+    '98': 'MIN c',
+    '97': 'MIN ce',
+    '96': 'MIN cm',
+    }
+
+IID =  2,     #Amount of diagnostic output printed 
+                #=0, no output
+                #=1, Minimal output, 
+                #=2, Regular output. 
+IPLT= 0,        #Principal solution measure 
+                #=0, Use L2-norm 
+                #<NDIM, Use the maximum of the IPLTth solution component
+                #2*NDIM, Use the integral of the IPLTth solution component
+                #3*NDIM, Use the L2-norm of the (IPLT-NDIM) solution components
+UZR={}          #Include manual detection of points 
+                #Either in form parameter: value
+                #Or parameter: [list]
+UZSTOP = {'Ct': 0, 'Ct': 100}
+                #Include manual stop at points
+                #Either in form parameter: value
+                #Or parameter: [list]
+ 
+
+  
+
+
+
+
+
