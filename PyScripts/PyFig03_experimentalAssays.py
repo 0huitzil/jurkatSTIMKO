@@ -3,21 +3,11 @@
 Fig01 
 Secondary experimental assays
 """
-import os
-import sys
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from matplotlib.patches import Rectangle
 import pandas as pd
-"""
-This command allows me to export the files directly to the 
-sister LaTeX directory. Feel free to comment
-"""
-# from pathlib import Path
-# parentPath = str(Path(os.getcwd()).parent)
-# sys.path.append(parentPath)
-# latexPath = Path(os.getcwd()).parent/'Latex'
 """
 importing changes to the RcParams
 """
@@ -137,7 +127,5 @@ ax.set_title('B', loc='left')
 ax.legend(loc='center right', ncol=1, bbox_to_anchor=(1, 0.2, 0.4, 0.5), mode='')#This legend will haunt me in my nightmares 
 
 filename = 'Fig3.pdf'
-# fig.savefig(latexPath/filename)
-fig.savefig('Figures/' + filename)
-
+saveFigure(filename, fig)
 # %%

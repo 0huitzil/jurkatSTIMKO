@@ -3,28 +3,14 @@
 Fig06
 Bifurcation diagram and sample time series of the WT model
 """
-import sys
-import os
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-
-"""
-Make sure AUTO is properly install before running these files
-"""
 from auto import run, load, save, merge, relabel, cl, klb, loadbd
-"""
-This command allows me to export the files directly to the 
-sister LaTeX directory. Feel free to comment
-"""
-from pathlib import Path
-parentPath = str(Path(os.getcwd()).parent)
-sys.path.append(parentPath)
-latexPath = Path(os.getcwd()).parent/'Latex'
 """
 importing changes to the RcParams
 """
 from myOptions import *
-from PyModels import parJurkatCell, sampleWTStable, plotTS
+from PyModels import parJurkatCell, sampleWTStable, plotTS, saveFigure
 matplotlib.rcParams.update(myRcParams())
 
 #%% Data Collection
@@ -32,35 +18,35 @@ matplotlib.rcParams.update(myRcParams())
 Bifurcation diagram
 Only run this is section if the .WT files have not been created yet
 """
-file = "AUTOJurkatWTCell"
-model = load(file) 
-Vplc = [0.1, 0.2, 0.3]
-eqWT = run(
-    model, 
-    IPS=1, 
-    ICP=['Vplc'], 
-    NMX=20000,
-    DS=1e-2,
-    DSMAX=5e-2,
-    UZSTOP={'Vplc': 2}, 
-    UZR={'Vplc': Vplc}
-)
-Vplc = [0.1, 0.2, 0.3]
-cycleWT = run(
-    eqWT('HB'), 
-    IPS=2,
-    # ISP=2, 
-    ICP=['Vplc', 11, 'MIN c'], 
-    NMX=5000,
-    NTST=500,
-    DS=1e-2,
-    DSMAX=1e-0,
-    SP=['LP2', 'UZ', 'PD2',],
-    UZSTOP={'Vplc': 2}, 
-    UZR={'Vplc': Vplc}
-)
-save(eqWT+cycleWT, 'WT')
-cl()
+# file = "AUTOJurkatWTCell"
+# model = load(file) 
+# Vplc = [0.1, 0.2, 0.3]
+# eqWT = run(
+#     model, 
+#     IPS=1, 
+#     ICP=['Vplc'], 
+#     NMX=20000,
+#     DS=1e-2,
+#     DSMAX=5e-2,
+#     UZSTOP={'Vplc': 2}, 
+#     UZR={'Vplc': Vplc}
+# )
+# Vplc = [0.1, 0.2, 0.3]
+# cycleWT = run(
+#     eqWT('HB'), 
+#     IPS=2,
+#     # ISP=2, 
+#     ICP=['Vplc', 11, 'MIN c'], 
+#     NMX=5000,
+#     NTST=500,
+#     DS=1e-2,
+#     DSMAX=1e-0,
+#     SP=['LP2', 'UZ', 'PD2',],
+#     UZSTOP={'Vplc': 2}, 
+#     UZR={'Vplc': Vplc}
+# )
+# save(eqWT+cycleWT, 'WT')
+# cl()
 #%% Data import
 """
 Loading WT AUTO file
@@ -241,6 +227,5 @@ for col, sample in enumerate(WT):
         )
 
 filename = 'Fig7.pdf'
-# fig.savefig(latexPath/filename)
-fig.savefig('Figures/' + filename)
+saveFigure(filename, fig)
 # %%

@@ -11,21 +11,11 @@ from matplotlib.patches import Rectangle
 import pandas as pd
 from numpy import exp
 """
-This command allows me to export the files directly to the 
-sister LaTeX directory. Feel free to comment
-"""
-from pathlib import Path
-parentPath = str(Path(os.getcwd()).parent)
-sys.path.append(parentPath)
-latexPath = Path(os.getcwd()).parent/'Latex'
-"""
 importing changes to the RcParams
 """
 from myOptions import *
-from PyModels import parJurkatCell, jurkatWTCDICell, jurkatS1CDICell, jurkatS2CDICell, icsJurkatCell, cpaProtocol, jurkatS1DynamicCell, jurkatWTDynamicCell, icsJurkatCellDynamicK1
+from PyModels import parJurkatCell, jurkatWTCDICell, jurkatS2KOCDICell, jurkatS1KOCDICell, icsJurkatCell, cpaProtocol, jurkatS2KODynamicCell, jurkatWTDynamicCell, icsJurkatCellDynamicK1
 matplotlib.rcParams.update(myRcParams())
-
-
 #%% Data collection
 """
 Data for the MAX SOCE assay is stored in the thapsMean and thapsSEM
@@ -66,11 +56,11 @@ model = jurkatWTCDICell
 WT = cpaProtocol(par, model, ics, Tg, tini, tf, tthaps, tsoce, tfinal, VsDebuff)
 
 par = parJurkatCell()
-model = jurkatS1CDICell
+model = jurkatS2KOCDICell
 S1 = cpaProtocol(par, model, ics, Tg, tini, tf, tthaps, tsoce, tfinal, VsDebuff)
 
 par = parJurkatCell()
-model = jurkatS2CDICell
+model = jurkatS1KOCDICell
 S2 = cpaProtocol(par, model, ics, Tg, tini, tf, tthaps, tsoce, tfinal, VsDebuff)
 """
 Data collection - model Dynamic K1
@@ -86,13 +76,13 @@ par['a0']=0.025
 WTd = cpaProtocol(par, model, ics, Tg, tini, tf, tthaps, tsoce, tfinal, VsDebuff)
 
 par = parJurkatCell()
-model = jurkatS1DynamicCell
+model = jurkatS2KODynamicCell
 par['a0']=0.025
 S1d = cpaProtocol(par, model, ics, Tg, tini, tf, tthaps, tsoce, tfinal, VsDebuff)
 
 ics = icsJurkatCell()
 par = parJurkatCell()
-model = jurkatS2CDICell
+model = jurkatS1KOCDICell
 par['a0']=0.01
 S2d = cpaProtocol(par, model, ics, Tg, tini, tf, tthaps, tsoce, tfinal, VsDebuff)
 """
@@ -270,7 +260,4 @@ ax.set_title('E', loc='left')
 ax.legend(loc='best', ncol=3, bbox_to_anchor=(0.1, 0.7, 1, 0.5), mode='expand',prop={'size': 6})
 
 filename = 'Fig12.pdf'
-fig.savefig(latexPath/filename)
-fig.savefig('Figures/' + filename)
-
-# %%
+saveFigure(filename, fig)

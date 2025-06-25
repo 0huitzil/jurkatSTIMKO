@@ -3,30 +3,14 @@
 Fig06
 Sample time series of the model
 """
-import sys
-import os
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-
-"""
-The path to the AUTO library is setup in myOptions.py
-Make sure to set the correct path there first before running these files
-"""
-from auto import *
 from auto import run, load, save, merge, relabel, cl, klb
-"""
-This command allows me to export the files directly to the 
-sister LaTeX directory. Feel free to comment
-"""
-# from pathlib import Path
-# parentPath = str(Path(os.getcwd()).parent)
-# sys.path.append(parentPath)
-# latexPath = Path(os.getcwd()).parent/'Latex'
 """
 importing changes to the RcParams
 """
 from myOptions import *
-from PyModels import  sampleS1, sampleS2, sampleWT, parJurkatCell, plotTS, sampleS1Stable
+from PyModels import  sampleS2KO, sampleS1KO, sampleWT, parJurkatCell, plotTS
 matplotlib.rcParams.update(myRcParams())
 #%% Data collection
 """
@@ -43,12 +27,12 @@ for V in Vplc:
 S1 = []
 for V in Vplc:
     par['Vplc']=0
-    sample = sampleS1(par, V, tf)
+    sample = sampleS2KO(par, V, tf)
     S1.append(sample)
 S2 = []
 for V in Vplc:
     par['Vplc']=0
-    sample = sampleS2(par, V, tf)
+    sample = sampleS1KO(par, V, tf)
     S2.append(sample)
 #%% Plotting
 """
@@ -115,6 +99,4 @@ for i, sample in enumerate(S1):
     plotTS(ax, xtrace=xtrace, ytrace=ytrace, xlim=xlim, ylim=ylim, yticks=yticks, xticks=xlim, color=color,  ylabel=ylabel, xlabel=xlabel, subtitle=title, legend=False)
 
 filename = 'Fig6.pdf'
-# fig.savefig(latexPath/filename)
-fig.savefig('Figures/' + filename)
-# %%
+saveFigure(filename, fig)

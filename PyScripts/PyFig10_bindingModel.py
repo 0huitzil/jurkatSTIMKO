@@ -9,20 +9,11 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from numpy import exp
 """
-This command allows me to export the files directly to the 
-sister LaTeX directory. Feel free to comment
-"""
-from pathlib import Path
-parentPath = str(Path(os.getcwd()).parent)
-sys.path.append(parentPath)
-latexPath = Path(os.getcwd()).parent/'Latex'
-"""
 importing changes to the RcParams
 """
 from myOptions import *
 from PyModels import parJurkatCell
 matplotlib.rcParams.update(myRcParams())
-
 #%% STIM expressions
 """
 Equations for the STIM binding model 
@@ -163,9 +154,4 @@ ax.set_title('C', loc ='left')
 ax.set_xlabel(r'ER Ca$^{2+}$ concentration ($\mu$M)')
 ax.legend(loc='best', ncol=2, bbox_to_anchor=(0.1, 0.9, 0.8, 0.2), mode='expand')
 filename = 'Fig10.pdf'
-fig.savefig(latexPath/filename)
-fig.savefig('Figures/' + filename)
-
-
-
-# %%
+saveFigure(filename, fig)

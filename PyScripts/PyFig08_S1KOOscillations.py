@@ -1,45 +1,28 @@
 #%% Libraries
 """
-Fig07
-Bifurcation diagram and sample time series of the S2 (S1KO) model
+Fig08
+Bifurcation diagram and sample time series of the S1KO model
 """
-import sys
-import os
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-
-"""
-The path to the AUTO library is setup in myOptions.py
-Make sure to set the correct path there first before running these files
-"""
-from myOptions import auto_directory
-sys.path.append(auto_directory)
-from auto import *
 from auto import run, load, save, merge, relabel, cl, klb, loadbd
-"""
-This command allows me to export the files directly to the 
-sister LaTeX directory. Feel free to comment
-"""
-from pathlib import Path
-parentPath = str(Path(os.getcwd()).parent)
-sys.path.append(parentPath)
-latexPath = Path(os.getcwd()).parent/'Latex'
 """
 importing changes to the RcParams
 """
 from myOptions import *
-from PyModels import parJurkatCell, sampleS2Stable, plotTS
+from PyModels import parJurkatCell, sampleS1KOStable, plotTS
 matplotlib.rcParams.update(myRcParams())
-
 #%% Data Collection
 """
 Data Vplc Diag 
-Only run this is if the .S2 files have not been created yet
+Only run this is if the .S1KO files have not been created yet
+Script might take between 10 and 20 minutes to run, depending on your machine
 """
-# file = "AUTOJurkatS2Cell"
-# model = load(file) 
+# file = "AUTOJurkatS1KOCell"
+# cts = 'AUTOJurkatCell'
+# model = load(file, constants = cts) 
 # Vplc = [0.044, 0.07, 0.1, 0.16]
-# eqS2 = run(
+# eqS1KO = run(
 #     model, 
 #     IPS=1, 
 #     ICP=['Vplc'], 
@@ -49,8 +32,8 @@ Only run this is if the .S2 files have not been created yet
 #     UZSTOP={'Vplc': 2}
 # )
 # #%
-# cycleS2 = run(
-#     eqS2('HB')[0], 
+# cycleS1KO = run(
+#     eqS1KO('HB')[0], 
 #     IPS=2,
 #     ICP=['Vplc', 11], 
 #     NMX=140000,
@@ -63,26 +46,26 @@ Only run this is if the .S2 files have not been created yet
 #     UZR={'Vplc': Vplc}, 
 #     THL={1: 1, 2:1, 3:1, 4:1, 5:1, 6:1, 7:0.1}
 # )
-# save(eqS2+cycleS2, 'S2')
+# save(eqS1KO+cycleS1KO, 'S1KO')
 # cl()
 #%% Data import
 """
-Loading S2 AUTO file
+Loading S1KO AUTO file
 """
-eqS2 = loadbd('S2')[0]
-cycleS2 = loadbd('S2')[1]
+eqS1KO = loadbd('S1KO')[0]
+cycleS1KO = loadbd('S1KO')[1]
 #%% Data import - time series
 """
-Data Simulation - S2 cells
+Data Simulation - S1KO cells
 """
 Vplc = [0.044, 0.07, 0.1, 0.16]
 par = parJurkatCell()
 tf = 250
-S2 = []
+S1KO = []
 for V in Vplc:
     par['Vplc']=0
-    sample = sampleS2Stable(par, V, tf)
-    S2.append(sample)
+    sample = sampleS1KOStable(par, V, tf)
+    S1KO.append(sample)
 #%% Plotting
 """
 Figure settings
@@ -96,11 +79,11 @@ Bifurcation diagram
 """
 ax = fig.add_subplot(spec[0:2,:])
 # Extracting the data from the bifurcation diagram object to plot
-eqCurve = eqS2
+eqCurve = eqS1KO
 eqCurve = eqCurve[0::1]
 eqStab = eqCurve.stability()
 eqStab.insert(0,0)
-cyCurve = cycleS2
+cyCurve = cycleS1KO
 cyCurve = cyCurve[0:109500] #don't worry about it
 cycleStab = cyCurve.stability()
 cycleStab.insert(0,0)
@@ -210,7 +193,7 @@ I need to plot 12 time series, 4 for c, ce and cm
 This is done in this big, ugly loop
 Someone smarter than me can do it more elegantly I am sure 
 """
-for col, sample in enumerate(S2):
+for col, sample in enumerate(S1KO):
     t = sample[0] #Time array
     for row in range(3):
         ax = fig.add_subplot(spec[row+2, col]) #First two rows are for the big diag
@@ -262,6 +245,5 @@ for col, sample in enumerate(S2):
         )
 
 filename = 'Fig8.pdf'
-fig.savefig(latexPath/filename)
-fig.savefig('Figures/' + filename)
+saveFigure(filename, fig)
 # %%

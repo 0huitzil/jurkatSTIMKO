@@ -10,14 +10,6 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import pandas as pd
 """
-This command allows me to export the files directly to the 
-sister LaTeX directory. Feel free to comment
-"""
-# from pathlib import Path
-# parentPath = str(Path(os.getcwd()).parent)
-# sys.path.append(parentPath)
-# latexPath = Path(os.getcwd()).parent/'Latex'
-"""
 importing changes to the RcParams
 """
 from myOptions import *
@@ -107,6 +99,5 @@ ax.set_yticks([])
 ax.set_title('E', loc='left')
 
 filename = 'Fig2.pdf'
-# fig.savefig(latexPath/filename)
-fig.savefig('Figures/' + filename)
+saveFigure(filename, fig)
 # %%

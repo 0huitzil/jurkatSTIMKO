@@ -3,21 +3,10 @@
 Fig01 
 Experimental time series
 """
-import os
-import sys
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-
 import pandas as pd
-"""
-This command allows me to export the files directly to the 
-sister LaTeX directory. Feel free to comment
-"""
-# from pathlib import Path
-# parentPath = str(Path(os.getcwd()).parent)
-# sys.path.append(parentPath)
-# latexPath = Path(os.getcwd()).parent/'Latex'
 """
 importing changes to the RcParams
 """
@@ -87,6 +76,5 @@ for i, column in enumerate(S1.columns):
     plotDataSample(df=S1, colname=column, ax=ax, color=colors[2], title=title, ylim=ylim, xticks=xticks, xlabel=xlabel, yticks=yticks, ylabel=ylabel)
 
 filename = 'Fig1.pdf'
-# fig.savefig(latexPath/filename) #Feel free to comment
-fig.savefig('Figures/' + filename)
+saveFigure(filename, fig)
 # %%

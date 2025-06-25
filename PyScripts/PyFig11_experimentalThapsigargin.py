@@ -10,18 +10,10 @@ import matplotlib.gridspec as gridspec
 from matplotlib.patches import Rectangle
 import pandas as pd
 """
-This command allows me to export the files directly to the 
-sister LaTeX directory. Feel free to comment
-"""
-from pathlib import Path
-parentPath = str(Path(os.getcwd()).parent)
-sys.path.append(parentPath)
-latexPath = Path(os.getcwd()).parent/'Latex'
-"""
 importing changes to the RcParams
 """
 from myOptions import *
-from PyModels import parJurkatCell, jurkatWTCDICell, jurkatS1CDICell, jurkatS2CDICell, icsJurkatCell, thapsProtocol
+from PyModels import parJurkatCell, jurkatWTCDICell, jurkatS2KOCDICell, jurkatS1KOCDICell, icsJurkatCell, thapsProtocol
 matplotlib.rcParams.update(myRcParams())
 #%% Data collection
 """
@@ -62,11 +54,11 @@ model = jurkatWTCDICell
 WT = thapsProtocol(par, model, ics, Tg, tini, tf, tthaps, tsoce, tguad, tfinal)
 
 par = parJurkatCell()
-model = jurkatS1CDICell
+model = jurkatS2KOCDICell
 S1 = thapsProtocol(par, model, ics, Tg, tini, tf, tthaps, tsoce, tguad, tfinal)
 
 par = parJurkatCell()
-model = jurkatS2CDICell
+model = jurkatS1KOCDICell
 S2 = thapsProtocol(par, model, ics, Tg, tini, tf, tthaps, tsoce, tguad, tfinal)
 #%% Plotting
 """
@@ -172,7 +164,4 @@ ax.set_title('C', loc='left')
 ax.legend(loc='best', ncol=1, bbox_to_anchor=(1, 0.6,))
 
 filename = 'Fig11.pdf'
-fig.savefig(latexPath/filename)
-fig.savefig('Figures/' + filename)
-
-# %%
+saveFigure(filename, fig)
