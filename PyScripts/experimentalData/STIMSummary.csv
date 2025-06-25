@@ -1,0 +1,6 @@
+Cell line ,Single Release,Wide Spike,Bursting,Narrow spike
+STIM1-KO1,57,45,37,1
+STIM1-KO2  ,48,60,32,0
+STIM2-KO1 , 0,48,84,8
+STIM2-KO2  ,0,53,72,15
+STIM-DKO,140,0,0,0
