@@ -2,12 +2,13 @@
 # region Libraries
 import numpy as np
 from scipy.integrate import solve_ivp
+from myOptions import *
 # endregion
-#%% S1 (or S2KO) model versions
+#%% S2KO model versions
 """
-S1 (or S2KO) model versions
+S2KO model versions
 """
-def jurkatS1Cell(t, y, par):
+def jurkatS2KOCell(t, y, par):
     """
     Create the model equations using Scipy for integration (solve_ivp)
     Model without CDI
@@ -48,7 +49,7 @@ def jurkatS1Cell(t, y, par):
     Th = getTh(y, par)
     JsercaC= getSERCAC(y, par)
     JsercaM= getSERCAM(y, par)
-    Jcrac = getS1CRAC(y, par)
+    Jcrac = getS2KOCRAC(y, par)
     Jpm = getPMCA(y, par)
     Jdiff= getDiff(y, par)
     Jdegr = getDegr(y, par)
@@ -69,7 +70,7 @@ def jurkatS1Cell(t, y, par):
     """
     return field 
 
-def jurkatS1CDICell(t, y, par):
+def jurkatS2KOCDICell(t, y, par):
     """
     Create the model equations using Scipy for integration (solve_ivp)
     Model with CDI enabled
@@ -110,7 +111,7 @@ def jurkatS1CDICell(t, y, par):
     Th = getTh(y, par)
     JsercaC= getSERCAC(y, par)
     JsercaM= getSERCAM(y, par)
-    Jcrac = getS1CRAC(y, par)
+    Jcrac = getS2KOCRAC(y, par)
     Jpm = getPMCA(y, par)
     Jdiff= getDiff(y, par)
     Jdegr = getDegr(y, par)
@@ -131,7 +132,7 @@ def jurkatS1CDICell(t, y, par):
     """
     return field 
 
-def jurkatBaseS1Cell(t, y, par):
+def jurkatBaseS2KOCell(t, y, par):
     """
     Create the model equations using Scipy for integration (solve_ivp)
     Base model without microdomain or CDI
@@ -174,7 +175,7 @@ def jurkatBaseS1Cell(t, y, par):
     Th = getTh(y, par)
     JsercaC= getSERCAC(y, par)
     # JsercaM= getSERCAM(y, par)
-    Jcrac = getS1CRAC(y, par)
+    Jcrac = getS2KOCRAC(y, par)
     Jpm = getPMCA(y, par)
     # Jdiff= getDiff(y, par)
     Jdegr = getDegr(y, par)
@@ -195,7 +196,7 @@ def jurkatBaseS1Cell(t, y, par):
     """
     return field 
 
-def jurkatS1DynamicCell(t, y, par):
+def jurkatS2KODynamicCell(t, y, par):
     """
     Create the model equations using Scipy for integration (solve_ivp)
     Model with dynamic K1 enabled
@@ -237,7 +238,7 @@ def jurkatS1DynamicCell(t, y, par):
     Tauk = getTauK(y, par)
     JsercaC= getSERCAC(y, par)
     JsercaM= getSERCAM(y, par)
-    Jcrac = getS1CRAC(y, par)
+    Jcrac = getS2KOCRAC(y, par)
     Jpm = getPMCA(y, par)
     Jdiff= getDiff(y, par)
     Jdegr = getDegr(y, par)
@@ -259,12 +260,12 @@ def jurkatS1DynamicCell(t, y, par):
     Return
     """
     return field 
-#%% S2 (or S1KO) model versions
+#%% S1KO model versions
 """
-S2 (or S1KO) model versions
-There is not S2DynamicCell
+S1KO model versions
+There is not S1KODynamicCell
 """
-def jurkatS2Cell(t, y, par):
+def jurkatS1KOCell(t, y, par):
     """
     Create the model equations using Scipy for integration (solve_ivp)
     Model without CDI
@@ -299,7 +300,7 @@ def jurkatS2Cell(t, y, par):
     Th = getTh(y, par)
     JsercaC= getSERCAC(y, par)
     JsercaM= getSERCAM(y, par)
-    Jcrac = getS2CRAC(y, par)
+    Jcrac = getS1KOCRAC(y, par)
     Jpm = getPMCA(y, par)
     Jdiff= getDiff(y, par)
     Jdegr = getDegr(y, par)
@@ -320,7 +321,7 @@ def jurkatS2Cell(t, y, par):
     """
     return field 
 
-def jurkatS2CDICell(t, y, par):
+def jurkatS1KOCDICell(t, y, par):
     """
     Create the model equations using Scipy for integration (solve_ivp)
     Model with CDI
@@ -355,7 +356,7 @@ def jurkatS2CDICell(t, y, par):
     Th = getTh(y, par)
     JsercaC= getSERCAC(y, par)
     JsercaM= getSERCAM(y, par)
-    Jcrac = getS2CRAC(y, par)
+    Jcrac = getS1KOCRAC(y, par)
     Jpm = getPMCA(y, par)
     Jdiff= getDiff(y, par)
     Jdegr = getDegr(y, par)
@@ -376,7 +377,7 @@ def jurkatS2CDICell(t, y, par):
     """
     return field 
 
-def jurkatBaseS2Cell(t, y, par):
+def jurkatBaseS1KOCell(t, y, par):
     """
     Create the model equations using Scipy for integration (solve_ivp)
     Base model without microdomain or CDI
@@ -418,7 +419,7 @@ def jurkatBaseS2Cell(t, y, par):
     Th = getTh(y, par)
     JsercaC= getSERCAC(y, par)
     # JsercaM= getSERCAM(y, par)
-    Jcrac = getS2CRAC(y, par)
+    Jcrac = getS1KOCRAC(y, par)
     Jpm = getPMCA(y, par)
     # Jdiff= getDiff(y, par)
     Jdegr = getDegr(y, par)
@@ -1160,9 +1161,9 @@ def getTh(y, par):
     Th=Tmax*(Kt**4 / (Kt**4 + c**4))
     return Th
 
-def getS1CRAC(y, par): 
+def getS2KOCRAC(y, par): 
     """
-    The s_infty term for the S1 (S2KO) version of the model
+    The s_infty term for the S2KO version of the model
 
     Parameters
     ----------
@@ -1191,9 +1192,9 @@ def getS1CRAC(y, par):
     Jcrac = a0 + w1/(1+np.exp(n*(ce-Ke)))
     return Jcrac
 
-def getS2CRAC(y, par): 
+def getS1KOCRAC(y, par): 
     """
-    The s_infty term for the S2 (S1KO) version of the model
+    The s_infty term for the S1KO version of the model
 
     Parameters
     ----------
@@ -1688,9 +1689,9 @@ def sampleWTBase(par, Vplc, tf):
     sample = getIVP(model, par, ics, tini=tini, tf=tf)
     return sample 
 
-def sampleS1Base(par, Vplc, tf):
+def sampleS2KOBase(par, Vplc, tf):
     """
-    Integration of the base S1 (S2KO) model after stimulation (represented by Vplc) for tf seconds. this run always uses the initial condition corresponding to the equiilibrium point at rest (Vplc = 0)
+    Integration of the base S2KO model after stimulation (represented by Vplc) for tf seconds. this run always uses the initial condition corresponding to the equiilibrium point at rest (Vplc = 0)
 
     Parameters
     ----------
@@ -1707,7 +1708,7 @@ def sampleS1Base(par, Vplc, tf):
             first entry is t value, rest of values are the model variables
     """
     ics = icsBaseJurkatCell()
-    model = jurkatBaseS1Cell
+    model = jurkatBaseS2KOCell
     tini=0
     par['Ke']=par['K1']
     par['Vsoce']=par['w1']
@@ -1720,9 +1721,9 @@ def sampleS1Base(par, Vplc, tf):
     sample = getIVP(model, par, ics, tini=tini, tf=tf)
     return sample 
 
-def sampleS2Base(par, Vplc, tf):
+def sampleS1KOBase(par, Vplc, tf):
     """
-    Integration of the base S2 (S1KO) model after stimulation (represented by Vplc) for tf seconds. this run always uses the initial condition corresponding to the equiilibrium point at rest (Vplc = 0)
+    Integration of the base S1KO model after stimulation (represented by Vplc) for tf seconds. this run always uses the initial condition corresponding to the equiilibrium point at rest (Vplc = 0)
 
     Parameters
     ----------
@@ -1739,7 +1740,7 @@ def sampleS2Base(par, Vplc, tf):
             first entry is t value, rest of values are the model variables
     """
     ics = icsBaseJurkatCell()
-    model = jurkatBaseS2Cell
+    model = jurkatBaseS1KOCell
     tini=0
     par['Ke']=par['K2']
     par['Vsoce']=par['w2']
@@ -1782,9 +1783,9 @@ def sampleWT(par, Vplc, tf):
     sample = getIVP(model, par, ics, tini=tini, tf=tf)
     return sample 
 
-def sampleS1(par, Vplc, tf):
+def sampleS2KO(par, Vplc, tf):
     """
-    Integration of the S1 (S2KO) model after stimulation (represented by Vplc) for tf seconds. this run always uses the initial condition corresponding to the equiilibrium point at rest (Vplc = 0)
+    Integration of the S2KO model after stimulation (represented by Vplc) for tf seconds. this run always uses the initial condition corresponding to the equiilibrium point at rest (Vplc = 0)
 
     Parameters
     ----------
@@ -1801,7 +1802,7 @@ def sampleS1(par, Vplc, tf):
             first entry is t value, rest of values are the model variables
     """
     ics = icsJurkatCell()
-    model = jurkatS1Cell
+    model = jurkatS2KOCell
     tini=0
     par['Ke']=par['K1']
     par['Vsoce']=par['w1']
@@ -1814,9 +1815,9 @@ def sampleS1(par, Vplc, tf):
     sample = getIVP(model, par, ics, tini=tini, tf=tf)
     return sample 
 
-def sampleS2(par, Vplc, tf):
+def sampleS1KO(par, Vplc, tf):
     """
-    Integration of the S2 (S1KO) model after stimulation (represented by Vplc) for tf seconds. this run always uses the initial condition corresponding to the equiilibrium point at rest (Vplc = 0)
+    Integration of the S1KO model after stimulation (represented by Vplc) for tf seconds. this run always uses the initial condition corresponding to the equiilibrium point at rest (Vplc = 0)
 
     Parameters
     ----------
@@ -1833,7 +1834,7 @@ def sampleS2(par, Vplc, tf):
             first entry is t value, rest of values are the model variables
     """
     ics = icsJurkatCell()
-    model = jurkatS2Cell
+    model = jurkatS1KOCell
     tini=0
     par['Ke']=par['K2']
     par['Vsoce']=par['w2']
@@ -1881,9 +1882,9 @@ def sampleWTStable(par, Vplc, tf: int, tf2=500):
     sample = getIVP(model, par, ics, tini=tini, tf=tf)
     return sample 
 
-def sampleS1Stable(par, Vplc, tf, tf2=500):
+def sampleS2KOStable(par, Vplc, tf, tf2=500):
     """
-    Integration of the S1 (S2KO) model after stimulation (represented by Vplc) for tf seconds. 
+    Integration of the S2KO model after stimulation (represented by Vplc) for tf seconds. 
     This functions does an initial integration for tf2 seconds to reach the stable periodic orbit firs. 
 
     Parameters
@@ -1903,10 +1904,10 @@ def sampleS1Stable(par, Vplc, tf, tf2=500):
             first entry is t value, rest of values are the model variables
     """
     ics = icsJurkatCell()
-    model = jurkatS1Cell        
+    model = jurkatS2KOCell        
     tini=0
     #These next lines ensure that the basic CRAC function uses the STIM1 parameters
-    #this might not be necessary because I defined the S1CRAC separately, but I guess it can't hurt to leave it here
+    #this might not be necessary because I defined the S2KOCRAC separately, but I guess it can't hurt to leave it here
     par['Ke']=par['K1']
     par['Vsoce']=par['w1']
     #Resting State 
@@ -1920,9 +1921,9 @@ def sampleS1Stable(par, Vplc, tf, tf2=500):
     sample = getIVP(model, par, ics, tini=tini, tf=tf)
     return sample 
 
-def sampleS2Stable(par, Vplc, tf, tf2=500):
+def sampleS1KOStable(par, Vplc, tf, tf2=500):
     """
-    Integration of the S2 (S1KO) model after stimulation (represented by Vplc) for tf seconds. 
+    Integration of the S1KO model after stimulation (represented by Vplc) for tf seconds. 
     This functions does an initial integration for tf2 seconds to reach the stable periodic orbit firs. 
 
     Parameters
@@ -1942,10 +1943,10 @@ def sampleS2Stable(par, Vplc, tf, tf2=500):
             first entry is t value, rest of values are the model variables
     """
     ics = icsJurkatCell()
-    model = jurkatS2Cell
+    model = jurkatS1KOCell
     tini=0
     #These next lines ensure that the basic CRAC function uses the STIM2 parameters
-    #this might not be necessary because I defined the S2CRAC separately, but I guess it can't hurt to leave it here
+    #this might not be necessary because I defined the S1KOCRAC separately, but I guess it can't hurt to leave it here
     par['Ke']=par['K2']
     par['Vsoce']=par['w2']
     #Resting State 
@@ -2025,6 +2026,29 @@ def plotDataSample(df, colname, ax, color, title, ylim, xticks=[], yticks=[], xl
     ax.set_ylabel(ylabel)
     ax.set_title(title, loc='left')
     return 0 
+
+def plotAUTOBranch(branch, xVar, yVar, ax, color = 'k'):
+    eqStab = branch.stability()
+    eqStab.insert(0,0)
+    for i in range(1,len(eqStab)):
+        if eqStab[i]< 0: #Stable curve is plotted as solid line
+            ax.plot(
+                branch[max(np.abs(eqStab[i-1])-1,0):np.abs(eqStab[i])][xVar], 
+                branch[max(np.abs(eqStab[i-1])-1,0):np.abs(eqStab[i])][yVar], 
+                color, 
+                ls='solid', 
+                alpha=1, 
+                zorder=-1,
+            )
+        else:
+            ax.plot( #unstable curve is plotted as dashed line
+                branch[max(np.abs(eqStab[i-1])-1,0):np.abs(eqStab[i])][xVar], 
+                branch[max(np.abs(eqStab[i-1])-1,0):np.abs(eqStab[i])][yVar], 
+                color,
+                ls='dashed',
+                alpha=1,
+                zorder=-1,
+            )
 
 #%% AUTO f90 writing files
 """
