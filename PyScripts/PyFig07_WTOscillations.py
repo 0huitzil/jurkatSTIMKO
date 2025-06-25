@@ -12,7 +12,6 @@ importing changes to the RcParams
 from myOptions import *
 from PyModels import parJurkatCell, sampleWTStable, plotTS, saveFigure
 matplotlib.rcParams.update(myRcParams())
-
 #%% Data Collection
 """
 Bifurcation diagram
