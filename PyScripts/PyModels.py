@@ -1,6 +1,8 @@
 #%% 
 # region Libraries
 import numpy as np
+from numpy import sqrt, exp
+from numpy.polynomial import Polynomial
 from scipy.integrate import solve_ivp
 from myOptions import *
 # endregion
@@ -774,6 +776,86 @@ def parJurkatCell():
     }
     return par
 
+def parExtendedJurkatCell():
+    """
+    This is the parameter set used in the jurkatCell model, when considering the extended STIM binding model with homodimers 
+
+    Parameters
+    ----------
+
+    Returns 
+    ----------
+    par: dict, set of named parameters
+    """
+    par = {
+        # PMCA 
+        'Vpm': 1.0, 
+        'Kpm': 0.2, 
+        # SOCE 
+        's1': 0.1, 
+        'Vsoce': 3, 
+        'Ts': 4, 
+        'Ke': 800, 
+        'a0': 0,
+        # Advanced SOCE 
+        'n': 0.025,
+        'K1': 200,
+        'K11': 100,
+        "K2": 350,
+        'K22': 100,
+        'K12': 500,
+        'K21': 400,
+        'w1': 1,
+        'w2': 0.7,
+        'w11': 2,
+        'w22': 1.4,
+        'w12': 3,
+        'w21': 3,
+        # IP3 
+        'Vdeg': 6, 
+        'Kdeg': 0.5,
+        'Vplc': 0, 
+        'Tp': 2.9, 
+        # 'p': 0, 
+        # Volume
+        'gammaE': 5.5,
+        'gammaM': 50,
+        'delta': 3,
+        # Total Ca, conserved for closed cell problems 
+        'Ct': 147,
+        # IPR 
+        'Kf': 1.6,
+        'kbeta': 0.4,
+        'Kp': 10,
+        'Kc': 0.16,
+        # H
+        'Kh': 0.168,
+        'Tmax': 10,
+        'Kt': 0.095,
+        # SERCA 
+        'VsC': 1,
+        'VsM': 0.2,
+        'KbarC': 2.2e-8,
+        'KbarM': 2.2e-8,
+        'KsM': 0.2,
+        'KsC': 0.2,
+        'Tg': 0,
+        # Diffusion
+        'kdiff': 0.004,
+        # CDI
+        'Ki': 800, 
+        'si': 0.2,
+        'Ti': 1, 
+        # Dynamic K1
+        'Vk': 670,
+        'k1Rest': 200,
+        'kn': 100,
+        'nk': 8,
+        'Tkmax': 800,
+        'taun': 60,
+    }
+    return par
+
 def parBaseJurkatCell():
     """
     This is the parameter set used in the base version of the model
@@ -1161,7 +1243,7 @@ def getTh(y, par):
     Th=Tmax*(Kt**4 / (Kt**4 + c**4))
     return Th
 
-def getS2KOCRAC(y, par): 
+def getS2KOCRAC(y, par, mode='default'): 
     """
     The s_infty term for the S2KO version of the model
 
@@ -1189,10 +1271,19 @@ def getS2KOCRAC(y, par):
     n=par['n']
     w1=par['w1']
     a0 = par['a0']
-    Jcrac = a0 + w1/(1+np.exp(n*(ce-Ke)))
+    if mode == 'default':
+        Jcrac = a0 + w1/(1+np.exp(n*(ce-Ke)))
+    else:
+        # Extended binding model
+        w11 = par['w11']
+        K11 = par['K11']
+        K1 =par['K1']
+        S1a = sqrt((exp(K1*n) + exp(ce*n))**2 + 8*exp(n*(2*K1 + K11)))*exp(-K1*n)*exp(-K11*n)/4 + (-exp(K1*n) - exp(ce*n))*exp(-n*(K1 + K11))/4
+        S11 = (sqrt((exp(K1*n) + exp(ce*n))**2 + 8*exp(n*(2*K1 + K11))) - exp(K1*n) - exp(ce*n))**2*exp(2*n*(K1 + K11) - n*(4*K1 + 3*K11))/16
+        Jcrac = a0 + w1*S1a + w11*S11
     return Jcrac
 
-def getS1KOCRAC(y, par): 
+def getS1KOCRAC(y, par, mode='default'): 
     """
     The s_infty term for the S1KO version of the model
 
@@ -1218,10 +1309,19 @@ def getS1KOCRAC(y, par):
     w2=par['w2']
     a0 = par['a0']
     Ke=par['K2']
-    Jcrac = a0 + w2/(1+np.exp(n*(ce-Ke)))
+    if mode == 'default':
+        Jcrac = a0 + w2/(1+np.exp(n*(ce-Ke)))
+    else:
+        #Extended binding model
+        w22 = par['w22']
+        K22 = par['K22']
+        K2 =par['K2']
+        S2a = sqrt((exp(K2*n) + exp(ce*n))**2 + 8*exp(n*(2*K2 + K22)))*exp(-K2*n)*exp(-K22*n)/4 + (-exp(K2*n) - exp(ce*n))*exp(-n*(K2 + K22))/4
+        S22 = (sqrt((exp(K2*n) + exp(ce*n))**2 + 8*exp(n*(2*K2 + K22))) - exp(K2*n) - exp(ce*n))**2*exp(2*n*(K2 + K22) - n*(4*K2 + 3*K22))/16
+        Jcrac = a0 + w2*S2a + w22*S22
     return Jcrac
 
-def getWTCRAC(y, par): 
+def getWTCRAC(y, par, mode = 'default'): 
     """
     The s_infty term for the WT version of the model
     The derivation for the expressions used in this functions is in PySym_STIMWTModel.py
@@ -1255,17 +1355,41 @@ def getWTCRAC(y, par):
     w12 = par['w12']
     w21 = par['w21']
     a0 = par['a0'] #a0 = 0 in the non-dynamic K1 version of the model. 
-    phi1=np.exp(n*(-K1 + ce))
-    phi2=np.exp(n*(-K2 + ce))
-    phi3=np.exp(n*(-K1 + K21 + ce))
-    phi4=np.exp(K12*n)
-    # Active species
-    S1a=(phi2 + 1)*(np.sqrt((phi1 + 1)*(phi2 + 1)*(phi1*phi2 + phi1 + phi2 + 4*phi3 + 4*phi4 + 1))/(2*(phi2*phi3 + phi2*phi4 + phi3 + phi4)) - (phi1 + 1)/(2*(phi3 + phi4)))/(phi1 + 1)
-    S2a=np.sqrt((phi1 + 1)*(phi2 + 1)*(phi1*phi2 + phi1 + phi2 + 4*phi3 + 4*phi4 + 1))/(2*(phi2*phi3 + phi2*phi4 + phi3 + phi4)) - (phi1 + 1)/(2*(phi3 + phi4))
-    S21=S1a*S2a*phi3
-    S12=S1a*S2a*phi4
-    # Flux
-    Jcrac = a0 + w1*S1a + w2*S2a + w12*S12 + w21*S21
+    if mode == 'default':
+        phi1=np.exp(n*(-K1 + ce))
+        phi2=np.exp(n*(-K2 + ce))
+        phi3=np.exp(n*(-K1 + K21 + ce))
+        phi4=np.exp(K12*n)
+        # Active species
+        S1a=(phi2 + 1)*(np.sqrt((phi1 + 1)*(phi2 + 1)*(phi1*phi2 + phi1 + phi2 + 4*phi3 + 4*phi4 + 1))/(2*(phi2*phi3 + phi2*phi4 + phi3 + phi4)) - (phi1 + 1)/(2*(phi3 + phi4)))/(phi1 + 1)
+        S2a=np.sqrt((phi1 + 1)*(phi2 + 1)*(phi1*phi2 + phi1 + phi2 + 4*phi3 + 4*phi4 + 1))/(2*(phi2*phi3 + phi2*phi4 + phi3 + phi4)) - (phi1 + 1)/(2*(phi3 + phi4))
+        S21=S1a*S2a*phi3
+        S12=S1a*S2a*phi4
+        # Flux
+        Jcrac = a0 + w1*S1a + w2*S2a + w12*S12 + w21*S21
+    else:
+        w22 = par['w22']
+        w11 = par['w11']
+        K22 = par['K22']
+        K11 = par['K11']
+        # Manually creating the eq08 polynomial to solve numerically and get the S1a value, the nth coefficient is called c-n
+        c4 = 2*K1**2*K11*K12**2*K22*exp(2*ce*n) + 4*K1*K11*K12*K21*K22*exp(ce*n) + 2*K11*K21**2*K22 - 8*K12**2*K21**2
+        c3 = K1**3*K11**2*K12**2*K22*exp(3*ce*n) + K1**2*K11**2*K12**2*K22*exp(2*ce*n) + 2*K1**2*K11**2*K12*K21*K22*exp(2*ce*n) + 2*K1*K11**2*K12*K21*K22*exp(ce*n) + K1*K11**2*K21**2*K22*exp(ce*n) + 2*K1*K11*K12**2*K2*K21*K22*exp(2*ce*n) - 8*K1*K11*K12**2*K21**2*exp(ce*n) + 2*K1*K11*K12**2*K21*K22*exp(ce*n) + K11**2*K21**2*K22 - 8*K11*K12**2*K21**2 + 2*K11*K12*K2*K21**2*K22*exp(ce*n) + 2*K11*K12*K21**2*K22
+        c2 = K1**2*K11**2*K12**2*K2*K21*K22*exp(3*ce*n) - 2*K1**2*K11**2*K12**2*K21**2*exp(2*ce*n) + K1**2*K11**2*K12**2*K21*K22*exp(2*ce*n) + K1*K11**2*K12**2*K2*K21*K22*exp(2*ce*n) - 4*K1*K11**2*K12**2*K21**2*exp(ce*n) + K1*K11**2*K12**2*K21*K22*exp(ce*n) + K1*K11**2*K12*K2*K21**2*K22*exp(2*ce*n) + K1*K11**2*K12*K21**2*K22*exp(ce*n) - 2*K11**2*K12**2*K21**2 + K11**2*K12*K2*K21**2*K22*exp(ce*n) + K11**2*K12*K21**2*K22 + 8*K11*K12**2*K21**2
+        c1 = -K1*K11**2*K12**2*K2*K21*K22*exp(2*ce*n) + 4*K1*K11**2*K12**2*K21**2*exp(ce*n) - K1*K11**2*K12**2*K21*K22*exp(ce*n) + 4*K11**2*K12**2*K21**2 - K11**2*K12*K2*K21**2*K22*exp(ce*n) - K11**2*K12*K21**2*K22
+        c0 = -2*K11**2*K12**2*K21**2
+        p = Polynomial([c0, c1, c2, c3, c4])
+        #This polynomial only seems to have one change of signs, hence by the Descartes rule of signs there is only one positive root
+        S1a = max(p.roots())
+        #Once S1a is obtained, we can just use that expression to calculate the rest 
+        S2a = -K12*K21*(K1*K11*S1a*exp(ce*n) + K11*S1a - K11 + 2*S1a**2)/(K11*S1a*(K1*K12*exp(ce*n) + K21))
+        S12 = S1a*S2a/K12
+        S21 = K1*S1a*S2a*exp(ce*n)/K21
+        S11 = S1a**2/K11
+        S22 = S2a**2/K22
+        S1 = K1*S1a*exp(ce*n)
+        S2 = K2*S2a*exp(ce*n)
+        Jcrac = 0
     return Jcrac
 
 def getCDI(y, par): 
@@ -1300,7 +1424,7 @@ def getCDI(y, par):
 
 def getKcurve(y, par): 
     """
-    The K_infty term
+    The Kinfty term
 
     Parameters
     ----------
@@ -1312,7 +1436,7 @@ def getKcurve(y, par):
     Returns 
     ----------
     kCurve: double
-            The K_infty term
+            The Kinfty term
 
     """
     #Variables 
