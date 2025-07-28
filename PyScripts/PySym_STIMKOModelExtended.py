@@ -46,7 +46,7 @@ Total STIM
 eq3 = S1t - (S1 + S1a + 2*S11)
 #%%
 """
-STIM dimers as functions of ce (using S1a and S2a as pivots)
+Solving eq3
 """
 s1 = solveset(eq1, S1).args[0]
 s11 = solveset(eq2, S11).args[0]

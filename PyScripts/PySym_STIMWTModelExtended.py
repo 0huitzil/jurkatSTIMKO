@@ -32,14 +32,6 @@ k22=Symbol('K_22')
 k12=Symbol('K_12')
 k21=Symbol('K_21')
 n=Symbol('n')
-# Reaction rates - numerical
-# k1=par['K1']
-# k2=par['K2']
-# k11=par['K11']
-# k22=par['K22']
-# k12=par['K12']
-# k21=par['K21']
-# n=par['n']
 #Calcium
 ce=Symbol('c_e')
 
@@ -127,17 +119,12 @@ S2aStar = solveset(p1a, S2a).args[0]
 S1aStar = p2a.subs(S2a, S2aStar).simplify()
 # Only need the numerator 
 S1aStar = S1aStar.args[2]
-#Polynomial version?
-S1aPoly = S1aStar.subs(phi4, ph4).subs(phi5, ph5).subs(phi6, ph6).subs(phi7, ph7)
-S1aPoly = S1aPoly.subs(ce, 891)
-S1aPoly = S1aPoly.as_poly(S1a)
-np.roots(S1aPoly.all_coeffs())
 #%%
 """
 The expressions for all the species are printed (with the phi expressions substitued in) to be used in the figure scripts. S1a is obtained numerically from implicit function, S2a is a function of S1a, and the four reminaing species are functions of S1a and S2a
 """
-S1aPrint = S1aStar
-S2aPrint = S2aStar
+S1aPrint = S1aStar.subs(S1a, Symbol('s1a'))
+S2aPrint = S2aStar.subs(S1a, Symbol('s1a'))
 S11Print = s11.subs(ph1, phi1).subs(ph2, phi2).subs(ph3, phi3).subs(ph4, phi4).subs(ph5, phi5).subs(ph6, phi6).subs(ph7, phi7)
 S22Print = s22.subs(ph1, phi1).subs(ph2, phi2).subs(ph3, phi3).subs(ph4, phi4).subs(ph5, phi5).subs(ph6, phi6).subs(ph7, phi7)
 S12Print = s12.subs(ph1, phi1).subs(ph2, phi2).subs(ph3, phi3).subs(ph4, phi4).subs(ph5, phi5).subs(ph6, phi6).subs(ph7, phi7)

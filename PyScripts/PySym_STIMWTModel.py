@@ -13,11 +13,11 @@ init_printing()
 Parameters 
 """
 S1=Symbol('S1')
-S1a=Symbol('S1^*')
+S1a=Symbol('S1a')
 S2=Symbol('S2')
-S2a=Symbol('S2^*')
-S12=Symbol('S12^*')
-S21=Symbol('S21^*')
+S2a=Symbol('S2a')
+S12=Symbol('S12')
+S21=Symbol('S21')
 #Total STIM
 S1t=1
 S2t=1
@@ -76,10 +76,10 @@ eq6 = eq6.subs(S1, s1).subs(S2, s2).subs(S12, s12).subs(S21, s21)
 """
 Polynomials
 """
-phi1 = Symbol('\phi_1')
-phi2 = Symbol('\phi_2')
-phi3 = Symbol('\phi_3')
-phi4 = Symbol('\phi_4')
+phi1 = Symbol('phi_1')
+phi2 = Symbol('phi_2')
+phi3 = Symbol('phi_3')
+phi4 = Symbol('phi_4')
 # Phi substitution
 ph1 = exp(n1*(ce - k1))
 ph2 = exp(n2*(ce - k2))
@@ -95,37 +95,20 @@ s= solve_poly_system([p1, p2])
 s = s[1]
 #%%
 """
-Explicit forms
+The expressions for all the species are printed (with the phi expressions substitued in) to be used in the figure scripts. S1a is obtained numerically from implicit function, S2a is a function of S1a, and the four reminaing species are functions of S1a and S2a
 """
-S1Astar = s[0]
-S2Astar = s[1]
-S21star = s21.subs(ph3, phi3).subs(ph4, phi4)
-S12star = s12.subs(ph3, phi3).subs(ph4, phi4)
-S1star = s1.subs(ph1, phi1).subs(ph2, phi2)
-S2star = s2.subs(ph1, phi1).subs(ph2, phi2)
-
-#%% Python printing
-# 
-print('phi1=')
-print(ph1)
-print('phi2=')
-print(ph2)
-print('phi3=')
-print(ph3)
-print('phi4=')
-print(ph4)
-print('S1a=')
-print(S1Astar)
-print('S2a=')
-print(S2Astar)
-print('S1=')
-print(S1star)
-print('S2=')
-print(S2star)
-print('S21=')
-print(S21star)
-print('S12=')
-print(S12star)
+S1aPrint = s[0].subs(S1a, Symbol('s1a'))
+S2aPrint = s[1].subs(S1a, Symbol('s1a'))
+S12Print = s12.subs(ph1, phi1).subs(ph2, phi2).subs(ph3, phi3).subs(ph4, phi4)
+S21Print = s21.subs(ph1, phi1).subs(ph2, phi2).subs(ph3, phi3).subs(ph4, phi4)
+S1Print = s1.subs(ph1, phi1).subs(ph2, phi2).subs(ph3, phi3).subs(ph4, phi4)
+S2Print = s2.subs(ph1, phi1).subs(ph2, phi2).subs(ph3, phi3).subs(ph4, phi4)
+print('S1a = ' + str(S1aPrint))
+print('S2a = ' + str(S2aPrint))
+print('S12 = ' + str(S12Print))
+print('S21 = ' + str(S21Print))
+print('S1 = ' + str(S1Print))
+print('S2 = ' + str(S2Print))
 # %% Desmos printing 
 """
 Unused, but left here just in case. This code changes the variable names to 'x' and 'y' in order to plot them in Desmos. 
