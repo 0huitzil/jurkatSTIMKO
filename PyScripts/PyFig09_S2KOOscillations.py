@@ -169,12 +169,12 @@ for i in cyCurve('UZ').getLabels():
         j=j+1
 # Ax limits 
 xlim = [0,0.4]
-ylim = [-0.05, 0.8]
+ylim = [-0.01, 0.75]
 yticks = [0, 0.8]
 ax.set_xlim(xlim)
 ax.set_ylim(ylim)
-ax.set_yticks(yticks)
-ax.set_xticks(xlim)
+ax.set_yticks([0, 0.25, 0.5, 0.75])
+ax.set_xticks([0, 0.1, 0.2, 0.3, 0.4])
 ax.set_xlabel(r'$V_{\mathrm{PLC}}$',)
 ax.set_ylabel(r'$c$', rotation='horizontal')
 ax.set_title('A', loc='left')

@@ -18,36 +18,38 @@ Data Vplc Diag
 Only run this is if the .S1KO files have not been created yet
 Script might take between 10 and 20 minutes to run, depending on your machine
 """
-# file = "AUTOJurkatS1KOCell"
-# cts = 'AUTOJurkatCell'
-# model = load(file, constants = cts) 
-# Vplc = [0.044, 0.07, 0.1, 0.16]
-# eqS1KO = run(
-#     model, 
-#     IPS=1, 
-#     ICP=['Vplc'], 
-#     NMX=20000,
-#     DS=1e-2,
-#     DSMAX=5e-2,
-#     UZSTOP={'Vplc': 2}
-# )
-# #%
-# cycleS1KO = run(
-#     eqS1KO('HB')[0], 
-#     IPS=2,
-#     ICP=['Vplc', 11], 
-#     NMX=140000,
-#     NTST=1500,
-#     DS=1e-2,
-#     DSMAX=3e-2,
-#     DSMIN=1e-6,
-#     SP=['LP0', 'UZ', 'PD0', 'TR0'],
-#     UZSTOP={'Vplc': 1}, 
-#     UZR={'Vplc': Vplc}, 
-#     THL={1: 1, 2:1, 3:1, 4:1, 5:1, 6:1, 7:0.1}
-# )
-# save(eqS1KO+cycleS1KO, 'S1KO')
-# cl()
+file = "AUTOJurkatS1KOCell"
+cts = 'AUTOJurkatCell'
+model = load(file, constants = cts) 
+Vplc = [0.044, 0.07, 0.1, 0.16]
+eqS1KO = run(
+    model, 
+    IPS=1, 
+    ICP=['Vplc'], 
+    NMX=20000,
+    DS=1e-2,
+    DSMAX=5e-2,
+    UZSTOP={'Vplc': 2}
+)
+#%%
+cycleS1KO = run(
+    eqS1KO('HB')[3], 
+    IPS=2,
+    JAC=1,
+    ICP=['Vplc', 11], 
+    NMX=20000,
+    NPR=5000,
+    NTST=1000,
+    DS=1e-3,
+    DSMAX=5e-2,
+    DSMIN=1e-6,
+    SP=['LP0', 'UZ', 'PD0', 'TR0'],
+    UZSTOP={'Vplc': 1}, 
+    UZR={'Vplc': Vplc}, 
+)
+#%%
+save(eqS1KO+cycleS1KO, 'S1KO')
+cl()
 #%% Data import
 """
 Loading S1KO AUTO file
@@ -162,13 +164,13 @@ for i in cyCurve('UZ').getLabels()[0:4]: #Labeling of the UZR points
         )
         j=j+1
 # Ax limits 
-xlim = [0,0.18]
-ylim = [-0.01, 0.6]
+xlim = [0,0.2]
+ylim = [-0.001, 0.6]
 yticks = [0, 0.6]
 ax.set_xlim(xlim)
 ax.set_ylim(ylim)
-ax.set_yticks(yticks)
-ax.set_xticks(xlim)
+ax.set_yticks([0, 0.2, 0.4, 0.6])
+ax.set_xticks([0,0.05, 0.1, 0.15, 0.2])
 ax.set_xlabel(r'$V_{\mathrm{PLC}}$',)
 ax.set_ylabel(r'$c$', rotation='horizontal')
 ax.set_title('A', loc='left')

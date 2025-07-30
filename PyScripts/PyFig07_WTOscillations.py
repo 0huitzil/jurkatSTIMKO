@@ -144,11 +144,11 @@ for i in cyCurve('UZ').getLabels():
         j=j+1
 # Ax limits 
 xlim = [0,0.4]
-ylim = [0, 0.5]
+ylim = [0, 0.4]
 ax.set_xlim(xlim)
 ax.set_ylim(ylim)
-ax.set_yticks(ylim)
-ax.set_xticks(xlim)
+ax.set_yticks([0, 0.15, 0.3, 0.45])
+ax.set_xticks([0, 0.1, 0.2, 0.3, 0.4])
 ax.set_xlabel(r'$V_{\mathrm{PLC}}$')
 ax.set_ylabel(r'$c$')
 ax.set_title('A', loc='left')

@@ -324,7 +324,6 @@ SUBROUTINE STPNT(NDIM,U,PAR,T)
       ! K1 parameters 
       DOUBLE PRECISION Vk, k1Rest, kn, nk, Tkmax, taun, kInfty, TauK
       DOUBLE PRECISION IPdeg, eps, PERIOD, TIME, num1, num2, num3
-
       !======================================
       ! # PMCA 
       Vpm=1.0
