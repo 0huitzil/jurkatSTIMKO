@@ -10,9 +10,9 @@ ENV/
 *.exe
 *.o
 fort.*
-b.*
-d.*
-s.*
+# b.*
+# d.*
+# s.*
 AUTOJacobianExample.*
 #Latex folder 
 LaTeX/
