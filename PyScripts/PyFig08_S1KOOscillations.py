@@ -32,21 +32,21 @@ eqS1KO = run(
     UZSTOP={'Vplc': 2}
 )
 #%%
-cycleS1KO = run(
-    eqS1KO('HB')[3], 
-    IPS=2,
-    JAC=1,
-    ICP=['Vplc', 11], 
-    NMX=20000,
-    NPR=5000,
-    NTST=1000,
-    DS=1e-3,
-    DSMAX=5e-2,
-    DSMIN=1e-6,
-    SP=['LP0', 'UZ', 'PD0', 'TR0'],
-    UZSTOP={'Vplc': 1}, 
-    UZR={'Vplc': Vplc}, 
-)
+# cycleS1KO = run(
+#     eqS1KO('HB')[0], 
+#     IPS=2,
+#     JAC=1,
+#     ICP=['Vplc', 11], 
+#     NMX=140000,
+#     NPR=5000,
+#     NTST=1200,
+#     DS=1e-3,
+#     DSMAX=5e-2,
+#     DSMIN=1e-6,
+#     SP=['LP0', 'UZ7', 'PD0', 'TR0'],
+#     UZSTOP={'Vplc': 1}, 
+#     UZR={'Vplc': Vplc}, 
+# )
 #%%
 save(eqS1KO+cycleS1KO, 'S1KO')
 cl()
@@ -86,7 +86,7 @@ eqCurve = eqCurve[0::1]
 eqStab = eqCurve.stability()
 eqStab.insert(0,0)
 cyCurve = cycleS1KO
-cyCurve = cyCurve[0:109500] #don't worry about it
+# cyCurve = cyCurve[0:109500] #don't worry about it
 cycleStab = cyCurve.stability()
 cycleStab.insert(0,0)
 #Alphabet
