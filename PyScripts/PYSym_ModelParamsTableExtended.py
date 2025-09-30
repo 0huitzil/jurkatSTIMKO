@@ -4,7 +4,7 @@
 from sympy import *
 from sympy.abc import x, y, z, a, b
 from sympy.plotting import plot
-from PyModels import parJurkatCell
+from PyModels import parExtendedJurkatCell
 init_printing() 
 
 #%% 
@@ -13,10 +13,10 @@ Parameters
 """
 def latexPar():
     par = {
-    'Vpm': [r'V_{pm}', '\muMsAp' ],
-    'Kpm': [r'K_{pm}', '\muMAp' ],
-    'Ts': [r'\tau_s', '(s)'  ],
-    'a0': [r'\alpha_0', '\muMsAp'  ],
+    # 'Vpm': [r'V_{pm}', '\muMsAp' ],
+    # 'Kpm': [r'K_{pm}', '\muMAp' ],
+    # 'Ts': [r'\tau_s', '(s)'  ],
+    # 'a0': [r'\alpha_0', '\muMsAp'  ],
     'n': [r'n', ' ' ],
     'K1': [r'K_1', '\muMAp'  ],
     'K11': [r'K_{11}', '\muMAp' ],
@@ -30,37 +30,38 @@ def latexPar():
     'w22': [r'w_{22}', '\muMsAp' ],
     'w12': [r'w_{12}', '\muMsAp' ],
     'w21': [r'w_{21}', '\muMsAp' ],
-    'Vdeg': [r'L_\degr', '\muMsAp' ],
-    'Kdeg': [r'K_\degr', '\muMAp' ],
-    # 'Vplc': [r'V_\plc', '\muMsAp' ],
-    'Tp': [r'\tau_p', '(s)' ],
-    'gammaE': [r'\gamma_E', ' ' ],
-    'gammaM': [r'\gamma_M', ' ' ],
-    'delta': [r'\delta', ' ' ],
-    'Kf': [r'K_f', '\muMsAp' ],
-    'kbeta': [r'k_\beta', ' ' ],
-    'Kp': [r'K_p', '\muMAp' ],
-    'Kc': [r'K_c', '\muMAp' ],
-    'Kh': [r'K_h', '\muMAp' ],
-    'Tmax': [r'\tau_{max}', '(s)' ],
-    'Kt': [r'K_\tau', '\muMAp' ],
-    'VsC': [r'V_{sC}', '\muMsAp' ],
-    'VsM': [r'V_{sM}', '\muMsAp' ],
-    'KbarC': [r'\bar{K}_C', ' ' ],
-    'KbarM': [r'\bar{K}_M', ' ' ],
-    'KsM': [r'K_{sM}', '\muMAp' ],
-    'KsC': [r'K_{sC}', '\muMAp' ],
-    'Tg': [r'T_g', ' ' ],
-    'kdiff': [r'k_{diff}', '\muMsTwoAp' ],
-    'Ki': [r'K_i', '\muMAp' ],
-    'si': [r's_i', ' ' ],
-    'Ti': [r'T_i', '(s)' ],
-    'Vk': [r'V_k', ' ' ],
-    'k1Rest': [r'k1_{Rest}', '\muMAp' ],
-    'kn': [r'k_n',  '\muMAp'],
-    'nk': [r'n_k', ' ' ],
-    'Tkmax': [r'\tau_{kmax}', '(s)' ],
-    'taun': [r'\tau_n', '(s)']}
+    # 'Vdeg': [r'L_\degr', '\muMsAp' ],
+    # 'Kdeg': [r'K_\degr', '\muMAp' ],
+    # # 'Vplc': [r'V_\plc', '\muMsAp' ],
+    # 'Tp': [r'\tau_p', '(s)' ],
+    # 'gammaE': [r'\gamma_E', ' ' ],
+    # 'gammaM': [r'\gamma_M', ' ' ],
+    # 'delta': [r'\delta', ' ' ],
+    # 'Kf': [r'K_f', '\muMsAp' ],
+    # 'kbeta': [r'k_\beta', ' ' ],
+    # 'Kp': [r'K_p', '\muMAp' ],
+    # 'Kc': [r'K_c', '\muMAp' ],
+    # 'Kh': [r'K_h', '\muMAp' ],
+    # 'Tmax': [r'\tau_{max}', '(s)' ],
+    # 'Kt': [r'K_\tau', '\muMAp' ],
+    # 'VsC': [r'V_{sC}', '\muMsAp' ],
+    # 'VsM': [r'V_{sM}', '\muMsAp' ],
+    # 'KbarC': [r'\bar{K}_C', ' ' ],
+    # 'KbarM': [r'\bar{K}_M', ' ' ],
+    # 'KsM': [r'K_{sM}', '\muMAp' ],
+    # 'KsC': [r'K_{sC}', '\muMAp' ],
+    # 'Tg': [r'T_g', ' ' ],
+    # 'kdiff': [r'k_{diff}', '\muMsTwoAp' ],
+    # 'Ki': [r'K_i', '\muMAp' ],
+    # 'si': [r's_i', ' ' ],
+    # 'Ti': [r'T_i', '(s)' ],
+    # 'Vk': [r'V_k', ' ' ],
+    # 'k1Rest': [r'k1_{Rest}', '\muMAp' ],
+    # 'kn': [r'k_n',  '\muMAp'],
+    # 'nk': [r'n_k', ' ' ],
+    # 'Tkmax': [r'\tau_{kmax}', '(s)' ],
+    # 'taun': [r'\tau_n', '(s)']
+    }
     return par 
 #%%
 pars1 = []
@@ -73,14 +74,14 @@ unit1 = []
 unit2 = []
 unit3 = []
 parTex = latexPar()
-parVals = parJurkatCell()
+parVals = parExtendedJurkatCell()
 headers = ['Par', 'Value', '(Units)']*3
 for k, p in list(enumerate(parTex)):
-    if k < 15:
+    if k < 5:
         pars1.append('$' + parTex[p][0] + '$')
         vals1.append(str(parVals[p]))
         unit1.append(' $' + parTex[p][1] + '$')
-    elif k < 30:
+    elif k < 10:
         pars2.append('$' + parTex[p][0]+ '$')
         vals2.append(str(parVals[p]))
         unit2.append(' $' + parTex[p][1] + '$')
