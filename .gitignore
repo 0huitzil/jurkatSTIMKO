@@ -20,3 +20,6 @@ LaTeX/
 #Python cache
 PyScripts/__pycache__
 .vscode/settings.json
+
+#ltex stuff 
+ltex.*

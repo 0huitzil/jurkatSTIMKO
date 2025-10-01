@@ -1,8 +1,14 @@
 # A model for the role of STIM1 and STIM2 in Ca2+ oscillations in T-lymphocytes
 
-## Running the figure scripts
+## Description 
 
-The scripts are validated to run in python3.8 using the following packages
+All the scripts used to generate the figures can be found in the PyScripts folder. PDF versions of the figures can be found in PyScripts/Figures.  AUTO configuration files and bifurcation diagram object files can be found in PyScripts/AUTO. The experimental data used to generate the figures can be found in PyScripts/experimentalData.
+
+To obtain a figure, simply run the corresponding script in python.
+
+## Requirements
+
+The scripts are validated to run in python 3.8 using the following packages
 
 - Matplotlib 3.4.0
 - Numpy 1.19.1
