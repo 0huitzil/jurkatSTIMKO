@@ -15,7 +15,7 @@ sys.path.append(parentPath)
 The path to the AUTO library is setup in myOptions.py
 Make sure to set the correct path there first before running these files
 """
-from myOptions import auto_directory
+from STIMKO_Options import auto_directory
 sys.path.append(auto_directory)
 from auto import *
 from auto import run, load, save, merge, relabel, cl, klb, loadbd
@@ -23,70 +23,21 @@ from auto import run, load, save, merge, relabel, cl, klb, loadbd
 This command allows me to export the files directly to the 
 sister LaTeX directory. Feel free to comment
 """
-from myOptions import latexPath
+from STIMKO_Options import latexPath
 """
 importing changes to the RcParams
 """
-from myOptions import *
-from PyModels import parJurkatCell, sampleS2Stable, plotTS
+from STIMKO_Options import *
+from STIMKO_Models import parJurkatCell, sampleS2Stable, plotTS
+from STIMKO_AUTO import loadBifDiag
 matplotlib.rcParams.update(myRcParams())
-
-#%% Data Collection
-"""
-Data Vplc Diag 
-Only run this is if the .S2 files have not been created yet
-"""
-# file = "AUTOJurkatS2Cell"
-# model = load(file) 
-# eqS2 = run(
-#     model, 
-#     IPS=1, 
-#     ICP=['Vplc'], 
-#     NMX=20000,
-#     DS=1e-2,
-#     DSMAX=5e-2,
-#     UZSTOP={'Vplc': 0.5}
-# )
-# #%
-# # Vplc = [0.06, 0.1, 0.2, 0.35]
-# cycleS2 = run(
-#     eqS2('HB')[0], 
-#     IPS=2,
-#     JAC=1,
-#     ICP=['Vplc', 11], 
-#     NMX=150000,
-#     NTST=1000,
-#     DS=1e-3,
-#     DSMAX=3e-2,
-#     DSMIN=1e-6,
-#     SP=['LP0', 'UZ', 'PD14', 'TR0'],
-#     UZSTOP={'Vplc': 1.76}, 
-#     # UZR={'Vplc': Vplc}, 
-# )
-# save(eqS2+cycleS2, 'S2a') #done up to this point 
-# cycleS2c = run(
-#     eqS2('HB')[2], 
-#     IPS=2,
-#     JAC=1,
-#     ICP=['Vplc', 11], 
-#     NMX=10000,
-#     NTST=1000,
-#     DS=1e-3,
-#     DSMAX=5e-2,
-#     DSMIN=1e-6,
-#     SP=['LP2', 'UZ', 'PD10', 'TR0'],
-#     UZSTOP={'Vplc': 2}, 
-#     # UZR={'Vplc': Vplc}, 
-# )
-# save(eqS2+cycleS2+cycleS2c, 'S2a')
-# cl()
 #%% Data import
 """
-Loading S2 AUTO file
-"""
-eqS2 = loadbd('S2a')[0]
-cycleS2 = loadbd('S2a')[1]
-cycleS2b = loadbd('S2a')[2]
+Loading S2 AUTO file. This file is now uploaded to the repository by default due to its size. Generate it locally first with the corresponding script in the AUTO folder. """
+bd = loadBifDiag('S2a')
+eqS2 = bd[0]
+cycleS2 = bd[1]
+cycleS2b = bd[2]
 #%% Plotting
 """
 Figure settings
@@ -641,8 +592,6 @@ ax.set_xlabel(r'$V_{\mathrm{PLC}}$',)
 # ax.set_ylabel(r'$c$', rotation='horizontal')
 ax.set_title('C', loc='left')
 # ax.legend()
-
-
 
 filename = 'Fig_S2OscillationsComplete.pdf'
 fig.savefig(latexPath/filename)

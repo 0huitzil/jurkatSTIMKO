@@ -10,9 +10,9 @@ import pandas as pd
 """
 importing changes to the RcParams
 """
-from myOptions import *
+from STIMKO_Options import *
 matplotlib.rcParams.update(myRcParams())
-from PyModels import plotDataSample
+from STIMKO_Models import plotDataSample
 
 #%% Data import
 """

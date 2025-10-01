@@ -9,53 +9,17 @@ from auto import run, load, save, merge, relabel, cl, klb, loadbd
 """
 importing changes to the RcParams
 """
-from myOptions import *
-from PyModels import parJurkatCell, sampleS1KOStable, plotTS
+from STIMKO_Options import *
+from STIMKO_Models import parJurkatCell, sampleS1KOStable, plotTS
 matplotlib.rcParams.update(myRcParams())
-#%% Data Collection
-"""
-Data Vplc Diag 
-Only run this is if the .S1KO files have not been created yet
-Script might take between 10 and 20 minutes to run, depending on your machine
-"""
-file = "AUTOJurkatS1KOCell"
-cts = 'AUTOJurkatCell'
-model = load(file, constants = cts) 
-Vplc = [0.044, 0.07, 0.1, 0.16]
-eqS1KO = run(
-    model, 
-    IPS=1, 
-    ICP=['Vplc'], 
-    NMX=20000,
-    DS=1e-2,
-    DSMAX=5e-2,
-    UZSTOP={'Vplc': 2}
-)
-#%%
-# cycleS1KO = run(
-#     eqS1KO('HB')[0], 
-#     IPS=2,
-#     JAC=1,
-#     ICP=['Vplc', 11], 
-#     NMX=140000,
-#     NPR=5000,
-#     NTST=1200,
-#     DS=1e-3,
-#     DSMAX=5e-2,
-#     DSMIN=1e-6,
-#     SP=['LP0', 'UZ7', 'PD0', 'TR0'],
-#     UZSTOP={'Vplc': 1}, 
-#     UZR={'Vplc': Vplc}, 
-# )
-#%%
-save(eqS1KO+cycleS1KO, 'S1KO')
-cl()
+from STIMKO_AUTO import loadBifDiag
 #%% Data import
 """
-Loading S1KO AUTO file
+Loading S1KO AUTO file. If it does not exist, obtain it with the getS1KOBifDiag function on the STIMKO_AUTO script. 
 """
-eqS1KO = loadbd('S1KO')[0]
-cycleS1KO = loadbd('S1KO')[1]
+bd = loadBifDiag('S1KO')
+eqS1KO = bd[0]
+cycleS1KO = bd[1]
 #%% Data import - time series
 """
 Data Simulation - S1KO cells

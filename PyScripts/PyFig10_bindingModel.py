@@ -11,8 +11,8 @@ from numpy import exp
 """
 importing changes to the RcParams
 """
-from myOptions import *
-from PyModels import parJurkatCell
+from STIMKO_Options import *
+from STIMKO_Models import parJurkatCell
 matplotlib.rcParams.update(myRcParams())
 #%% STIM expressions
 """

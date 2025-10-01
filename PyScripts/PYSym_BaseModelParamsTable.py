@@ -4,7 +4,7 @@
 from sympy import *
 from sympy.abc import x, y, z, a, b
 from sympy.plotting import plot
-from PyModels import parBaseJurkatCell
+from PyScripts.STIMKO_Models import parBaseJurkatCell
 init_printing() 
 
 #%% 

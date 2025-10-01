@@ -12,8 +12,8 @@ from scipy.optimize import newton, brentq
 """
 importing changes to the RcParams
 """
-from myOptions import *
-from PyModels import parExtendedJurkatCell, parJurkatCell
+from STIMKO_Options import *
+from STIMKO_Models import parExtendedJurkatCell, parJurkatCell
 # from PySym_STIMWTModelExtended import S1aPoly
 matplotlib.rcParams.update(myRcParams())
 #%% STIM expressions

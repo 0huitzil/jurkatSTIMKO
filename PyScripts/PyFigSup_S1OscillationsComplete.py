@@ -15,7 +15,7 @@ sys.path.append(parentPath)
 The path to the AUTO library is setup in myOptions.py
 Make sure to set the correct path there first before running these files
 """
-from myOptions import auto_directory
+from STIMKO_Options import auto_directory
 sys.path.append(auto_directory)
 from auto import *
 from auto import run, load, save, merge, relabel, cl, klb, loadbd
@@ -23,86 +23,23 @@ from auto import run, load, save, merge, relabel, cl, klb, loadbd
 This command allows me to export the files directly to the 
 sister LaTeX directory. Feel free to comment
 """
-from myOptions import latexPath
+from STIMKO_Options import latexPath
 """
 importing changes to the RcParams
 """
-from myOptions import *
-from PyModels import parJurkatCell, sampleS1Stable, plotTS
+from STIMKO_Options import *
+from STIMKO_Models import parJurkatCell, sampleS1Stable, plotTS
+from STIMKO_AUTO import loadBifDiag
 matplotlib.rcParams.update(myRcParams())
-
-#%% Data Collection
-"""
-Data Vplc Diag 
-Only run this is if the .S1a files have not been created yet
-"""
-# file = "AUTOJurkatS1Cell"
-# model = load(file) 
-# eqS1 = run(
-#     model, 
-#     IPS=1, 
-#     ICP=['Vplc'], 
-#     NMX=20000,
-#     DS=1e-2,
-#     DSMAX=5e-2,
-#     UZSTOP={'Vplc': 2}
-# )
-# #%
-# # Vplc = [0.06, 0.1, 0.2, 0.35]
-# cycleS1 = run(
-#     eqS1('HB')[0], 
-#     IPS=2,
-#     JAC=1,
-#     ICP=['Vplc', 11], 
-#     NMX=150000,
-#     NTST=1000,
-#     DS=1e-3,
-#     DSMAX=3e-2,
-#     DSMIN=1e-6,
-#     SP=['LP0', 'UZ', 'PD', 'TR0'],
-#     UZSTOP={'Vplc': 1.76}, 
-#     # UZR={'Vplc': Vplc}, 
-# )
-# save(eqS1+cycleS1, 'S1a')
-# cycleS1b = run(
-#     eqS1('HB')[1], 
-#     IPS=2,
-#     JAC=1,
-#     ICP=['Vplc', 11], 
-#     NMX=80000,
-#     NTST=1000,
-#     DS=1e-3,
-#     DSMAX=3e-2,
-#     DSMIN=1e-6,
-#     SP=['LP100', 'UZ', 'PD100', 'TR0'],
-#     UZSTOP={'Vplc': 2}, 
-#     # UZR={'Vplc': Vplc}, 
-# )
-# save(eqS1+cycleS1+cycleS1b, 'S1a')
-# cycleS1c = run(
-#     eqS1('HB')[2], 
-#     IPS=2,
-#     JAC=1,
-#     ICP=['Vplc', 11], 
-#     NMX=40000,
-#     NTST=1000,
-#     DS=1e-3,
-#     DSMAX=3e-2,
-#     DSMIN=1e-6,
-#     SP=['LP0', 'UZ', 'PD0', 'TR0'],
-#     UZSTOP={'Vplc': 2}, 
-#     # UZR={'Vplc': Vplc}, 
-# )
-# save(eqS1+cycleS1+cycleS1b+cycleS1c, 'S1a')
-# cl()
 #%% Data import
 """
-Loading S1 AUTO file
+Loading S1 AUTO file. This file is now uploaded to the repository by default due to its size. Generate it locally first with the corresponding script in the AUTO folder. 
 """
-eqS1 = loadbd('S1a')[0]
-cycleS1 = loadbd('S1a')[1]
-cycleS1b = loadbd('S1b')[0]
-cycleS1c = loadbd('S1a')[3]
+bd = loadBifDiag('S1a')
+eqS1 = bd[0]
+cycleS1 = bd[1]
+cycleS1b = bd[0]
+cycleS1c = bd[3]
 #%% Plotting
 """
 Figure settings

@@ -5,16 +5,12 @@ import numpy as np
 from cycler import cycler
 from matplotlib.figure import Figure
 
-# auto_directory = "/home/huitzil/auto/07p/python" 
 """
 This command allows me to export the files directly to the 
 sister LaTeX directory. Feel free to comment
 """
-from pathlib import Path
-# parentPath = str(Path(os.getcwd()).parent)
-# sys.path.append(parentPath)
-# latexPath = Path(os.getcwd()).parent/'Latex'
-latexPath = r'/mnt/c/Users/fcas077/OneDrive - The University of Auckland/PhD/2024/STIMKOPaper/LaTeX'
+
+# latexPath = r'/mnt/c/Users/fcas077/OneDrive - The University of Auckland/PhD/2024/STIMKOPaper/LaTeX'
 
 def saveFigure(filename: str, fig: Figure):
 

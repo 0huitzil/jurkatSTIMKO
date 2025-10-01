@@ -15,7 +15,7 @@ sys.path.append(parentPath)
 The path to the AUTO library is setup in myOptions.py
 Make sure to set the correct path there first before running these files
 """
-from myOptions import auto_directory
+from STIMKO_Options import auto_directory
 sys.path.append(auto_directory)
 from auto import *
 from auto import run, load, save, merge, relabel, cl, klb, loadbd
@@ -23,12 +23,12 @@ from auto import run, load, save, merge, relabel, cl, klb, loadbd
 This command allows me to export the files directly to the 
 sister LaTeX directory. Feel free to comment
 """
-from myOptions import latexPath
+from STIMKO_Options import latexPath
 """
 importing changes to the RcParams
 """
-from myOptions import *
-from PyModels import parJurkatCell, sampleS1Stable, plotTS
+from STIMKO_Options import *
+from STIMKO_Models import parJurkatCell, sampleS1Stable, plotTS
 matplotlib.rcParams.update(myRcParams())
 
 #%% Data Collection

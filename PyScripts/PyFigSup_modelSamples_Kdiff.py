@@ -9,8 +9,8 @@ from auto import run, load, save, merge, relabel, cl, klb
 """
 importing changes to the RcParams
 """
-from myOptions import *
-from PyModels import  sampleS2KO, sampleS1KO, sampleWT, parJurkatCell, plotTS
+from STIMKO_Options import *
+from STIMKO_Models import  sampleS2KO, sampleS1KO, sampleWT, parJurkatCell, plotTS
 matplotlib.rcParams.update(myRcParams())
 #% Data collection
 """

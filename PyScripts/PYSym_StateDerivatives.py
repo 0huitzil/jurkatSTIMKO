@@ -7,7 +7,7 @@ Due to fortran size limitations, the line breaks (&) have to be inserted manuall
 from sympy import *
 from sympy.abc import x, y, z, a, b
 from sympy.plotting import plot
-from PyModels import parJurkatCell
+from PyScripts.STIMKO_Models import parJurkatCell
 init_printing() 
 
 #%% 

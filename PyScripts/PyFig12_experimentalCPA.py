@@ -13,8 +13,8 @@ from numpy import exp
 """
 importing changes to the RcParams
 """
-from myOptions import *
-from PyModels import parJurkatCell, jurkatWTCDICell, jurkatS2KOCDICell, jurkatS1KOCDICell, icsJurkatCell, cpaProtocol, jurkatS2KODynamicCell, jurkatWTDynamicCell, icsJurkatCellDynamicK1
+from STIMKO_Options import *
+from STIMKO_Models import parJurkatCell, jurkatWTCDICell, jurkatS2KOCDICell, jurkatS1KOCDICell, icsJurkatCell, cpaProtocol, jurkatS2KODynamicCell, jurkatWTDynamicCell, icsJurkatCellDynamicK1
 matplotlib.rcParams.update(myRcParams())
 #%% Data collection
 """

@@ -12,8 +12,8 @@ from scipy.optimize import newton, brentq
 """
 importing changes to the RcParams
 """
-from myOptions import *
-from PyModels import parExtendedJurkatCell, parJurkatCell
+from STIMKO_Options import *
+from STIMKO_Models import parExtendedJurkatCell, parJurkatCell
 # from PySym_STIMWTModelExtended import S1aPoly
 matplotlib.rcParams.update(myRcParams())
 #%% STIM expressions
@@ -52,13 +52,11 @@ def S1astar(S1a, phi_1, phi_2, phi_3, phi_4, phi_5, phi_6, phi_7, c_e, n):
 def S1astarPrime(S1a, phi_1, phi_2, phi_3, phi_4, phi_5, phi_6, phi_7, c_e, n):
     # F holds the derivative of S1aS"tar
     Fprime = S1a**2*(phi_1*phi_7 + phi_4)**2*(4*S1a*phi_6 + phi_1 + 1) + 2*S1a*(phi_1*phi_7 + phi_4)**2*(2*S1a**2*phi_6 + S1a*phi_1 + S1a - 1) + 2*S1a*(phi_1*phi_7 + phi_4)**2 + S1a*(phi_1*phi_7 + phi_4)*(4*S1a*phi_6 + phi_1 + phi_2*(4*S1a*phi_6 + phi_1 + 1) + 1) - 2*phi_5*(8*S1a*phi_6 + 2*phi_1 + 2)*(2*S1a**2*phi_6 + S1a*phi_1 + S1a - 1) + (phi_1*phi_7 + phi_4)*(2*S1a**2*phi_6 + S1a*phi_1 + S1a + phi_2*(2*S1a**2*phi_6 + S1a*phi_1 + S1a - 1) - 1)
-    # Fprime = (S1a*phi_1*phi_7*(phi_1*phi_7 + phi_4 - (S1a*phi_1**2*phi_7**2 + 2*S1a*phi_1*phi_4*phi_7 + S1a*phi_4**2 + phi_1*phi_2*phi_7 + phi_1*phi_7 + phi_2*phi_4 + phi_4)/sqrt(S1a**2*phi_1**2*phi_7**2 + 2*S1a**2*phi_1*phi_4*phi_7 + S1a**2*phi_4**2 + 2*S1a*phi_1*phi_2*phi_7 + 2*S1a*phi_1*phi_7 + 2*S1a*phi_2*phi_4 + 2*S1a*phi_4 + phi_2**2 + 2*phi_2 + 8*phi_5 + 1)) + S1a*phi_4*(phi_1*phi_7 + phi_4 - (S1a*phi_1**2*phi_7**2 + 2*S1a*phi_1*phi_4*phi_7 + S1a*phi_4**2 + phi_1*phi_2*phi_7 + phi_1*phi_7 + phi_2*phi_4 + phi_4)/sqrt(S1a**2*phi_1**2*phi_7**2 + 2*S1a**2*phi_1*phi_4*phi_7 + S1a**2*phi_4**2 + 2*S1a*phi_1*phi_2*phi_7 + 2*S1a*phi_1*phi_7 + 2*S1a*phi_2*phi_4 + 2*S1a*phi_4 + phi_2**2 + 2*phi_2 + 8*phi_5 + 1)) + phi_1*phi_7*(S1a*phi_1*phi_7 + S1a*phi_4 + phi_2 - sqrt(S1a**2*phi_1**2*phi_7**2 + 2*S1a**2*phi_1*phi_4*phi_7 + S1a**2*phi_4**2 + 2*S1a*phi_1*phi_2*phi_7 + 2*S1a*phi_1*phi_7 + 2*S1a*phi_2*phi_4 + 2*S1a*phi_4 + phi_2**2 + 2*phi_2 + 8*phi_5 + 1) + 1) + phi_4*(S1a*phi_1*phi_7 + S1a*phi_4 + phi_2 - sqrt(S1a**2*phi_1**2*phi_7**2 + 2*S1a**2*phi_1*phi_4*phi_7 + S1a**2*phi_4**2 + 2*S1a*phi_1*phi_2*phi_7 + 2*S1a*phi_1*phi_7 + 2*S1a*phi_2*phi_4 + 2*S1a*phi_4 + phi_2**2 + 2*phi_2 + 8*phi_5 + 1) + 1) + 4*phi_5*(-4*S1a*phi_6 - phi_1 - 1))/(4*phi_5)
     return Fprime
 
 def S1astarPrime2(S1a, phi_1, phi_2, phi_3, phi_4, phi_5, phi_6, phi_7, c_e, n):
     # F holds the second derivative of S1aStar
     Fprime = 4*S1a**2*phi_6*(phi_1*phi_7 + phi_4)**2 + 4*S1a*(phi_1*phi_7 + phi_4)**2*(4*S1a*phi_6 + phi_1 + 1) + S1a*(phi_1*phi_7 + phi_4)*(4*phi_2*phi_6 + 4*phi_6) - 16*phi_5*phi_6*(2*S1a**2*phi_6 + S1a*phi_1 + S1a - 1) - 2*phi_5*(4*S1a*phi_6 + phi_1 + 1)*(8*S1a*phi_6 + 2*phi_1 + 2) + 2*(phi_1*phi_7 + phi_4)**2*(2*S1a**2*phi_6 + S1a*phi_1 + S1a - 1) + 2*(phi_1*phi_7 + phi_4)**2 + 2*(phi_1*phi_7 + phi_4)*(4*S1a*phi_6 + phi_1 + phi_2*(4*S1a*phi_6 + phi_1 + 1) + 1)
-    # Fprime = (S1a*phi_1*phi_7*(-(phi_1**2*phi_7**2 + 2*phi_1*phi_4*phi_7 + phi_4**2)/sqrt(S1a**2*phi_1**2*phi_7**2 + 2*S1a**2*phi_1*phi_4*phi_7 + S1a**2*phi_4**2 + 2*S1a*phi_1*phi_2*phi_7 + 2*S1a*phi_1*phi_7 + 2*S1a*phi_2*phi_4 + 2*S1a*phi_4 + phi_2**2 + 2*phi_2 + 8*phi_5 + 1) - (-S1a*phi_1**2*phi_7**2 - 2*S1a*phi_1*phi_4*phi_7 - S1a*phi_4**2 - phi_1*phi_2*phi_7 - phi_1*phi_7 - phi_2*phi_4 - phi_4)*(S1a*phi_1**2*phi_7**2 + 2*S1a*phi_1*phi_4*phi_7 + S1a*phi_4**2 + phi_1*phi_2*phi_7 + phi_1*phi_7 + phi_2*phi_4 + phi_4)/(S1a**2*phi_1**2*phi_7**2 + 2*S1a**2*phi_1*phi_4*phi_7 + S1a**2*phi_4**2 + 2*S1a*phi_1*phi_2*phi_7 + 2*S1a*phi_1*phi_7 + 2*S1a*phi_2*phi_4 + 2*S1a*phi_4 + phi_2**2 + 2*phi_2 + 8*phi_5 + 1)**(3/2)) + S1a*phi_4*(-(phi_1**2*phi_7**2 + 2*phi_1*phi_4*phi_7 + phi_4**2)/sqrt(S1a**2*phi_1**2*phi_7**2 + 2*S1a**2*phi_1*phi_4*phi_7 + S1a**2*phi_4**2 + 2*S1a*phi_1*phi_2*phi_7 + 2*S1a*phi_1*phi_7 + 2*S1a*phi_2*phi_4 + 2*S1a*phi_4 + phi_2**2 + 2*phi_2 + 8*phi_5 + 1) - (-S1a*phi_1**2*phi_7**2 - 2*S1a*phi_1*phi_4*phi_7 - S1a*phi_4**2 - phi_1*phi_2*phi_7 - phi_1*phi_7 - phi_2*phi_4 - phi_4)*(S1a*phi_1**2*phi_7**2 + 2*S1a*phi_1*phi_4*phi_7 + S1a*phi_4**2 + phi_1*phi_2*phi_7 + phi_1*phi_7 + phi_2*phi_4 + phi_4)/(S1a**2*phi_1**2*phi_7**2 + 2*S1a**2*phi_1*phi_4*phi_7 + S1a**2*phi_4**2 + 2*S1a*phi_1*phi_2*phi_7 + 2*S1a*phi_1*phi_7 + 2*S1a*phi_2*phi_4 + 2*S1a*phi_4 + phi_2**2 + 2*phi_2 + 8*phi_5 + 1)**(3/2)) + 2*phi_1*phi_7*(phi_1*phi_7 + phi_4 - (S1a*phi_1**2*phi_7**2 + 2*S1a*phi_1*phi_4*phi_7 + S1a*phi_4**2 + phi_1*phi_2*phi_7 + phi_1*phi_7 + phi_2*phi_4 + phi_4)/sqrt(S1a**2*phi_1**2*phi_7**2 + 2*S1a**2*phi_1*phi_4*phi_7 + S1a**2*phi_4**2 + 2*S1a*phi_1*phi_2*phi_7 + 2*S1a*phi_1*phi_7 + 2*S1a*phi_2*phi_4 + 2*S1a*phi_4 + phi_2**2 + 2*phi_2 + 8*phi_5 + 1)) + 2*phi_4*(phi_1*phi_7 + phi_4 - (S1a*phi_1**2*phi_7**2 + 2*S1a*phi_1*phi_4*phi_7 + S1a*phi_4**2 + phi_1*phi_2*phi_7 + phi_1*phi_7 + phi_2*phi_4 + phi_4)/sqrt(S1a**2*phi_1**2*phi_7**2 + 2*S1a**2*phi_1*phi_4*phi_7 + S1a**2*phi_4**2 + 2*S1a*phi_1*phi_2*phi_7 + 2*S1a*phi_1*phi_7 + 2*S1a*phi_2*phi_4 + 2*S1a*phi_4 + phi_2**2 + 2*phi_2 + 8*phi_5 + 1)) - 16*phi_5*phi_6)/(4*phi_5)
     return Fprime
 
 def S1a(phi_1, phi_2, phi_3, phi_4, phi_5, phi_6, phi_7, c_e, n):
@@ -172,41 +170,8 @@ Figure settings
 """
 fig = plt.figure(constrained_layout = True)
 spec = gridspec.GridSpec(ncols = 1, nrows=3, figure=fig)
-fig_width,fig_height = set_figsize(1, (2,1), export=True)
+fig_width,fig_height = set_figsize(1, (1.85,1), export=True)
 fig.set_size_inches([fig_width,fig_height])
-"""
-s_infty functions 
-WT, S1 (S2KO), S2 (S1KO)
-"""
-# ax = fig.add_subplot(spec[0,:])
-# ax.plot(c_e, Jcrac, 'tab:purple', ls =  'solid', lw=2, label = r'WT')
-# ax.plot(c_e, S1, 'tab:blue', ls =  'solid', lw=2, label = r'S2-KO')
-# ax.plot(c_e, S2, 'tab:red', ls =  'solid', lw=2, label = r'S1-KO')
-# #Ax limits
-# ax.set_ylim([0,2.5])
-# ax.set_yticks([0,2])
-# ax.set_xlim([0,1000])
-# ax.set_xticks([0,250, 500, 750, 1000])
-# ax.set_title('A', loc ='left')
-# ax.set_ylabel('CRAC \n current', rotation=0, labelpad=20)
-# ax.set_xlabel(r'ER Ca$^{2+}$ concentration ($\mu$M)')
-# ax.legend(loc='best', ncol=1, bbox_to_anchor=(0.85, 0.8))
-# """
-# s_infty, S12 and S21 in the WT model
-# """
-# ax = fig.add_subplot(spec[1,0])
-# ax.plot(c_e, s12, 'tab:orange', ls =  'solid', lw=2, label = r'$S_{12}^*$')
-# ax.plot(c_e, s21, 'tab:green', ls =  'solid', lw=2, label = r'$S_{21}^*$')
-# ax.plot(c_e, Jcrac, 'tab:purple', ls =  'solid', lw=2, label = r'$s_\infty$')
-# #Ax limits
-# ax.set_ylim([0,2.6])
-# ax.set_yticks([0,2])
-# ax.set_xlim([0,1000])
-# ax.set_xticks([0,250, 500, 750, 1000])
-# ax.set_title('B', loc ='left')
-# ax.set_ylabel('Activated \n STIM', rotation=0, labelpad=20)
-# ax.set_xlabel(r'ER Ca$^{2+}$ concentration ($\mu$M)')
-# ax.legend(loc='best', ncol=2, bbox_to_anchor=(0.1, 0.8, 0.8, 0.2), mode='expand')
 
 """
 S12, S21, S1a and S2a in the WT model
@@ -214,19 +179,17 @@ S12, S21, S1a and S2a in the WT model
 ax = fig.add_subplot(spec[0,0])
 # ax.plot(c_e, s1, 'tab:blue', ls =  'dashed', lw=2, label = r'$S_{1}$' )
 # ax.plot(c_e, s2, 'tab:red', ls =  'dashed', lw=2, label = r'$S_{2}$')
-ax.plot(c_e, s1a, 'tab:blue', ls =  'solid', lw=2, label = r'$S_{1}^*$' )
-ax.plot(c_e, s2a, 'tab:red', ls =  'solid', lw=2, label = r'$S_{2}^*$')
+# ax.plot(c_e, s1a, 'tab:blue', ls =  'solid', lw=2, label = r'$S_{1}^*$' )
+# ax.plot(c_e, s2a, 'tab:red', ls =  'solid', lw=2, label = r'$S_{2}^*$')
 ax.plot(c_e, s12, 'tab:orange', ls =  'solid', lw=2, label = r'$S_{12}^*$')
 ax.plot(c_e, s21, 'tab:green', ls =  'solid', lw=2, label = r'$S_{21}^*$')
 # ax.plot(c_e, s11, 'tab:pink', ls =  'solid', lw=2, label = r'$S_{11}^*$' )
 # ax.plot(c_e, s22, 'tab:cyan', ls =  'solid', lw=2, label = r'$S_{22}^*$')
 ax.plot(c_e, Jcrac, 'tab:purple', ls =  'solid', lw=2, label = r'WT CRAC')
 ax.plot(c_e, WTBase, 'tab:purple', ls =  'dashed', lw=2, label = r'WT CRAC (base)')
-# ax.plot(c_e, (s1 + s1a + s12 + s21 + 2*s11), 'tab:orange', ls =  'solid', lw=2, label = r'Total STIM1')
-# ax.plot(c_e, s2 + s2a + s12 + s21 + 2*s22, 'tab:purple', ls =  'solid', lw=2, label = r'Total STIM2')
 #Ax limits
-ax.set_ylim([-0.01, 3.5])
-ax.set_yticks([0, 3])
+ax.set_ylim([-0.01, 4])
+ax.set_yticks([0, 1, 3])
 ax.set_xlim([0,1000])
 # ax.set_xticks([0,250, 400,])
 ax.set_title('A', loc ='left')
@@ -234,13 +197,13 @@ ax.set_xlabel(r'ER Ca$^{2+}$ concentration ($\mu$M)')
 ax.legend(loc='best', ncol=2, bbox_to_anchor=(0.1, 0.9, 0.8, 0.2), mode='expand')
 
 """
-S12, S21, S1a and S2a in the S1-KO model
+S12, S21, S1a and S2a in the S2-KO model
 """
 ax = fig.add_subplot(spec[1,0])
 ax.plot(c_e, S1aKO, 'tab:olive', ls =  'solid', lw=2, label = r'$S_{1}^*$')
 ax.plot(c_e, S11KO, 'tab:cyan', ls =  'solid', lw=2, label = r'$S_{11}^*$')
-ax.plot(c_e, S2KO_CRAC, 'tab:blue', ls =  'solid', lw=2, label = r'S1KO CRAC')
-ax.plot(c_e, S2KOBase, 'tab:blue', ls =  'dashed', lw=2, label = r'S1KO CRAC (base)')
+ax.plot(c_e, S2KO_CRAC, 'tab:blue', ls =  'solid', lw=2, label = r'S2KO CRAC')
+ax.plot(c_e, S2KOBase, 'tab:blue', ls =  'dashed', lw=2, label = r'S2KO CRAC (base)')
 #Ax limits
 ax.set_ylim([-0.01, 1.4])
 ax.set_yticks([0,1])
@@ -250,13 +213,13 @@ ax.set_title('B', loc ='left')
 ax.set_xlabel(r'ER Ca$^{2+}$ concentration ($\mu$M)')
 ax.legend(loc='best', ncol=2, bbox_to_anchor=(0.1, 0.9, 0.8, 0.2), mode='expand')
 """
-S12, S21, S1a and S2a in the S2-KO model
+S12, S21, S1a and S2a in the S1-KO model
 """
 ax = fig.add_subplot(spec[2,0])
 ax.plot(c_e, S2aKO, 'tab:brown', ls =  'solid', lw=2, label = r'$S_{2}^*$')
 ax.plot(c_e, S22KO, 'tab:pink', ls =  'solid', lw=2, label = r'$S_{22}^*$')
-ax.plot(c_e, S1KO_CRAC, 'tab:red', ls =  'solid', lw=2, label = r'S2KO CRAC')
-ax.plot(c_e, S1KOBase, 'tab:red', ls =  'dashed', lw=2, label = r'S2KO CRAC (base)')
+ax.plot(c_e, S1KO_CRAC, 'tab:red', ls =  'solid', lw=2, label = r'S1KO CRAC')
+ax.plot(c_e, S1KOBase, 'tab:red', ls =  'dashed', lw=2, label = r'S1KO CRAC (base)')
 #Ax limits
 ax.set_ylim([-0.01, 1.4])
 ax.set_yticks([0,1])
@@ -265,6 +228,7 @@ ax.set_xticks([0,250, 500, 750, 1000])
 ax.set_title('C', loc ='left')
 ax.set_xlabel(r'ER Ca$^{2+}$ concentration ($\mu$M)')
 ax.legend(loc='best', ncol=2, bbox_to_anchor=(0.1, 0.9, 0.8, 0.2), mode='expand')
-# filename = 'Fig10.pdf'
-# saveFigure(filename, fig)
+
+filename = 'Fig15.pdf'
+saveFigure(filename, fig)
 # %%

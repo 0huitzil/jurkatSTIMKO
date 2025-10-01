@@ -1,10 +1,12 @@
 #%% 
-# region Libraries
+"""
+Contains the model functions, and some auxiliary plotting functions
+"""
 import numpy as np
 from numpy import sqrt, exp
 from numpy.polynomial import Polynomial
 from scipy.integrate import solve_ivp
-from myOptions import *
+from STIMKO_Options import *
 # endregion
 #%% S2KO model versions
 """

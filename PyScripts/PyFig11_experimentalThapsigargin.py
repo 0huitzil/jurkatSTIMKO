@@ -12,8 +12,8 @@ import pandas as pd
 """
 importing changes to the RcParams
 """
-from myOptions import *
-from PyModels import parJurkatCell, jurkatWTCDICell, jurkatS2KOCDICell, jurkatS1KOCDICell, icsJurkatCell, thapsProtocol
+from STIMKO_Options import *
+from STIMKO_Models import parJurkatCell, jurkatWTCDICell, jurkatS2KOCDICell, jurkatS1KOCDICell, icsJurkatCell, thapsProtocol
 matplotlib.rcParams.update(myRcParams())
 #%% Data collection
 """

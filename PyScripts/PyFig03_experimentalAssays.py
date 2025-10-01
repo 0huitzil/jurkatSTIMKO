@@ -11,7 +11,7 @@ import pandas as pd
 """
 importing changes to the RcParams
 """
-from myOptions import *
+from STIMKO_Options import *
 matplotlib.rcParams.update(myRcParams())
 #%% Data import
 """
