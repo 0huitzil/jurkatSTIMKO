@@ -2,9 +2,30 @@
 
 ## Description 
 
-All the scripts used to generate the figures can be found in the PyScripts folder. PDF versions of the figures can be found in PyScripts/Figures.  AUTO configuration files and bifurcation diagram object files can be found in PyScripts/AUTO. The experimental data used to generate the figures can be found in PyScripts/experimentalData.
+
+### The figure scripts
+
+All the scripts used to generate the figures can be found in the PyScripts folder. PDF versions of the figures can be found in PyScripts/Figures.
 
 To obtain a figure, simply run the corresponding script in python.
+
+### The Python models
+
+We use `Sympy` to integrate the ODE models. All the related functions used for time series integration and plotting can be found in the `STIMKO_Models.py` script. 
+
+### Experimental data 
+
+Snippet of the experimental data used in the figures can be found in individual csv files under `PyScripts/experimentalData`
+
+### The AUTO scripts
+
+Different versions of the model (WT, S1-KO, S2-KO) are containted in individual `.f90` files. Scripts with the  suffix `CDI` on the name also include the CDI regulatory mechanism. Scripts with the `DynamicCell` suffix on the name include both the CDI regulatory mechanism, the differential equation describing the changes in $K_1$ (STIM1's binding affinity to Ca2+), and the STIM-independent influx pathway ($\alpha_0$)
+
+### The SymPy scripts
+
+The code used to create the expressions for the activated forms $S_1$, $S_2$, $S_{21}$ and $S_{12}$ is found in the `PySym_STIMKOModel` and `PySym_STIMWTModel` scripts.  
+
+
 
 ## Requirements
 
@@ -24,14 +45,6 @@ conda env create -f ca_env.yml
 ```
 
 One still needs to install AUTO to be able to run the continuation scripts, however.
-
-## The AUTO scripts
-
-Different versions of the model (WT, S1-KO, S2-KO) are containted in individual `.f90` files. Scripts with the  suffix `CDI` on the name also include the CDI regulatory mechanism. Scripts with the `DynamicCell` suffix on the name include both the CDI regulatory mechanism, the differential equation describing the changes in $K_1$ (STIM1's binding affinity to Ca2+), and the STIM-independent influx pathway ($\alpha_0$)
-
-## The SymPy scripts
-
-The code used to create the expressions for the activated forms $S_1$, $S_2$, $S_{21}$ and $S_{12}$ is found in the `PySym_STIMKOModel` and `PySym_STIMWTModel` scripts.  
 
 ## Installing AUTO
 
@@ -77,3 +90,4 @@ pip install -e .
 ```
 
 With this you can run `import auto` on the scripts without adding the AUTO path manually.
+
